@@ -83,4 +83,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            ls -lah
+            cd ~/apps/rekabox
+            git pull origin master
+            yarn install
+            pm2 restart all
