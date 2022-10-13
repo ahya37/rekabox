@@ -11,7 +11,7 @@ export default function SignIn() {
                 <div className="form-block shadow">
                   <div className="mb-4">
                     <h3>
-                      Sign In  <strong>RekaBox</strong>
+                      Sign In to <strong>RekaBox</strong>
                     </h3>
                   </div>
                   <SignInForm />
