@@ -1,0 +1,40 @@
+{
+  "posts": [
+    {
+      "name": "Realme",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdUrhm_4dyJk-WVqz7XVe7YdE3vSqRaAAbbg&usqp=CAU",
+      "stock": 14,
+      "detail": {
+        "price": "1000000",
+        "category": "Handphone"
+      },
+      "count" :1,
+      "id": 6,
+      "type": "Bundel"
+    },
+    {
+      "name": "Oppo",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdUrhm_4dyJk-WVqz7XVe7YdE3vSqRaAAbbg&usqp=CAU",
+      "stock": 16,
+      "detail": {
+        "price": "1000000",
+        "category": "Handphone"
+      },
+      "count" :1,
+      "id": 7,
+      "type": "Bundel"
+    },
+    {
+      "name": "Xiaomi",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdUrhm_4dyJk-WVqz7XVe7YdE3vSqRaAAbbg&usqp=CAU",
+      "stock": 8,
+      "detail": {
+        "price": "1000000",
+        "category": "Handphone"
+      },
+      "count" :1,
+      "id": 8,
+      "type": "Item"
+    }
+  ]
+}
