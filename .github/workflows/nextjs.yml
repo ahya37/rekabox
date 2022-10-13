@@ -83,4 +83,4 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            ll -lah
+            ls -lah
