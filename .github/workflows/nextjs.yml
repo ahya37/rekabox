@@ -66,6 +66,7 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
+        run: yarn build
 
   # Deployment job
   deploy:
@@ -76,5 +77,11 @@ jobs:
     needs: build
     steps:
       - name: Deploy to Production
-        id: deployment
-        uses: actions/deploy-pages@v1
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            ll
