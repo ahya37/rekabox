@@ -83,6 +83,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
+            chmod 777 -R /root/apps/rekabox/*
             cd /root/apps/rekabox
             git pull origin master
             yarn install
