@@ -28,14 +28,14 @@ export default function ShowDetailItem(props) {
         </div>
       </div>
       {!it_idx ? (
-        <div className="card-body shadow border-bottom">
+        <div className="card-body  border-bottom">
           Tidak ada item terpilih
         </div>
       ) : (
-        <div className="row mt-3">
-          <div className="col-md-12 mt-2 ">
-            <div onClick={() => onDetail(it_idx)}>
-              <div className="card shadow ">
+        <div className="row">
+          <div className="col-md-12">
+            <div onClick={() => onDetail(it_idx)} style={{ cursor: "pointer" }}>
+              <div className="card">
                 <div className="card-body">
                   <div className="row alert alert-secondary">
                     <div className="col-md-2">
@@ -72,7 +72,7 @@ export default function ShowDetailItem(props) {
                     </div>
                   </div>
                 </div>
-                <div className="card shadow">
+                <div className="card">
                   {locations.map((location) => (
                     <div className="card-body" key={location.lc_loidx}>
                       <div className="row">

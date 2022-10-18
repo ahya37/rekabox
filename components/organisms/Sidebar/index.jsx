@@ -1,6 +1,7 @@
 import Cookies from "js-cookie";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { setMenu } from "redux/action/menu";
 import { getAllBranch } from "../../../services/branch";
 import { getMenu } from "../../../services/users";
 import { SelectBranch } from "../../organisms";
@@ -19,7 +20,7 @@ export default function Sidebar(props) {
 
   const getMenuAPI = useCallback(async (token,branch) => {
     const response = await getMenu(token,branch);
-    dispatch({ type: "SET_MENU", value: response.data.data.menu });
+    dispatch(setMenu(response.data.data.menu));
   }, []);
 
   const getAllBranchAPI = useCallback(async (token) => {
@@ -35,8 +36,6 @@ export default function Sidebar(props) {
     getMenuAPI(token, branch);
     getAllBranchAPI(token);
   }, []);
-
-
 
   return (
     <div className="iq-sidebar">

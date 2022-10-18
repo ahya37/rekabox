@@ -83,7 +83,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd ~/apps/rekabox
+            cd /root/apps/rekabox
             git pull origin master
             yarn install
             ~/.nvm/versions/node/v12.19.0/bin/pm2 restart all

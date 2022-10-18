@@ -1,8 +1,7 @@
 import MenuItem from "./MenuItem";
 
 export default function MenuItemDropDown(props) {
-  const { activeMenu } = props;
-  const { title, active, icon, name, data } = props;
+  const { activeMenu, title, active, icon, name, data } = props;
 
 
   return (

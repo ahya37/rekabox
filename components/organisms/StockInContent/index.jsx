@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { Button, Col, Row,Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { setDetailItem } from "redux/action/item";
 import { getItemByLocation } from "../../../services/item";
 import {
   BarcodeScanner,
@@ -43,7 +44,7 @@ export default function StockInContent(props) {
     if (showItems !== false) {
       getItemApi(locIdx, data,token,branch);
     } else {
-      dispatch({ type: "SET_DETAIL_ITEM", value: [] });
+      dispatch(setDetailItem([]));
       setItems([]);
     }
   }, [setItems, showItems]);

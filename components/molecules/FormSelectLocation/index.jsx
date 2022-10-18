@@ -47,8 +47,8 @@ export default function FormSelectLocation() {
     const data = new FormData();
     data.append("token", useForm.token);
     const response = await getItemByLocation(locIdx, data, token,branch);
-    dispatch({ type: "SET_ITEM_BY_LOCATION", value: response?.data.data.item });
-    dispatch({ type: "SET_DETAIL_ITEM", value: {} });
+    dispatch(setSelectItemLocation(response?.data.data.item));
+    dispatch(setDetailItem({}));
   };
 
   const onSelectAll = async (value) => {
@@ -58,13 +58,11 @@ export default function FormSelectLocation() {
       token,
     };
 
-
     const data = new FormData();
     data.append("token", useForm.token);
     const response = await getItemByLocation(locIdx, data, token,branch);
-
-    dispatch({ type: "SET_ITEM_BY_LOCATION", value: response?.data.data.item });
-    dispatch({ type: "SET_DETAIL_ITEM", value: {} });
+    dispatch(setSelectItemLocation(response?.data.data.item));
+    dispatch(setDetailItem({}))
   }
   
   return (
