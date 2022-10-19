@@ -24,7 +24,7 @@ export default function ShowItem() {
     const data = new FormData();
     data.append("token", useForm.token);
     const location = await getLocationByItem(it_idx, data, token);
-    dispatch(setLocationByItem(location?.data.data.lokasi))
+    dispatch(setLocationByItem(location?.data.data.lokasi));
   };
 
   const handleFilter = (event) => {
