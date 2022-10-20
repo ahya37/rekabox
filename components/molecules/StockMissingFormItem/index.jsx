@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FooterStockForm } from "..";
 import { setSaveStockMissingItem } from "../../../services/item";
 import { toast } from "react-toastify";
+import { setDetailItem, setFromDateStockMissing, setSelectItemLocation, setShowItems } from "redux/action/item";
 
 export default function StockMissingFormItem(props) {
   const { title, countDesc } = props;
@@ -24,10 +25,7 @@ export default function StockMissingFormItem(props) {
   } = detailItem;
 
   const [count, setCount] = useState("1");
-  const [itIdx, setIdx] = useState("");
   const [desc, setDesc] = useState("");
-  const [inStock, setInStock] = useState("");
-
   const [isLoading, setIsLoading] = useState(false);
 
   const IMG = process.env.NEXT_PUBLIC_IMG;
@@ -68,15 +66,11 @@ export default function StockMissingFormItem(props) {
     if (response.error) {
       toast.error(response.message);
     } else {
-      dispatch({ type: "SET_DETAIL_ITEM", value: {} });
-      dispatch({ type: "SET_ITEM_BY_LOCATION", value: [] });
-      dispatch({
-        type: "SET_USEFORM_DATE_STOCK_MISSING",
-        value: "",
-      });
-      dispatch({ type: "SET_SHOW_ITEMS", value: false });
+      dispatch(setDetailItem({}));
+      dispatch(setSelectItemLocation([]));
+      dispatch(setFromDateStockMissing(""));
+      dispatch(setShowItems(false))
       setCount(null);
-      setIdx("");
       setDesc("");
 
       if (props.instock === "in") {
@@ -90,10 +84,9 @@ export default function StockMissingFormItem(props) {
   };
 
   const onCancel = () => {
-    dispatch({ type: "SET_DETAIL_ITEM", value: {} });
-    dispatch({ type: "SET_ITEM_BY_LOCATION", value: [] });
+    dispatch(setDetailItem({}));
+    dispatch(setSelectItemLocation([]));
     setCount(null);
-    setIdx("");
     setDesc("");
   };
 
@@ -117,110 +110,99 @@ export default function StockMissingFormItem(props) {
 
   return (
     <>
-      <Col md={6} sm={12} xs={12}>
-        <div className="card mt-3">
-          <div className="card-body d-flex justify-content-between">
-            <Col md={10} sm={10}>
-              <div className="iq-header-title">
-                <h5 className="card-title">{title}</h5>
-              </div>
-            </Col>
+      <Col md={6} sm={12} xs={12} className="mt-4">
+        {!it_idx ? (
+          <div className="border-bottom">
+            Tidak ada item terpilih
           </div>
-          {!it_idx ? (
-            <div className="card-body shadow border-bottom">
-              Tidak ada item terpilih
-            </div>
-          ) : (
-            <div className="card-body shadow border-bottom">
-              <ul className="report-lists m-0 p-0">
-                <Col md={12} xs={12} sm={12}>
-                  <Row className="alert alert-secondary">
-                    <Col md={2} xs={4} sm={4}>
-                      {it_image !== "NULL" ? (
-                        <img
-                          src={`${IMG}/${it_image}`}
-                          width="50"
-                          height="50"
-                        />
-                      ) : (
-                        <img
-                          src="/icon/broken_image.svg"
-                          width="50"
-                          height="50"
-                        />
-                      )}
-                    </Col>
-                    <Col md={8} xs={8} sm={8}>
-                      <div className="media-support-info">
-                        <h6>
-                          {it_name} ({it_serial_number})<br />
-                          <small>{loc_name}</small>
-                        </h6>
-                      </div>
-                    </Col>
+        ) : (
+          <Col md={12} xs={12} sm={12}>
+            <ul className="xlist-group list-group-flush p-0">
+              <li className="list-group-item p-0">
+                <Row>
+                  <Col md={1} className="mr-3">
+                    {it_image !== "NULL" ? (
+                      <img
+                        src={`${IMG}/${it_image}`}
+                        width="60"
+                        height="60"
+                      />
+                    ) : (
+                      <img
+                        src="/icon/broken_image.svg"
+                        width="50"
+                        height="50"
+                      />
+                    )}
+                  </Col>
+                  <Col md={9}>
+                    <smal>
+                      {it_name} ({it_serial_number})
+                    </smal>
+                    <br />
+                    <small>{loc_name}</small>
+                  </Col>
 
-                    <Col md={1} xs={1} sm={1} className="float-right">
-                      <button
-                        type="button"
-                        className="btn btn-sm btn-default"
-                        onClick={() =>
-                          dispatch({ type: "SET_DETAIL_ITEM", value: {} })
-                        }
-                      >
-                        <img src="/icon/close.svg" />
-                      </button>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md={12} sm={12} xs={12} className="mt-3">
-                      <div className="form-group">
-                        <input
-                          type="text"
-                          className="form-control form-control-sm"
-                          value={count}
-                          onChange={(event) => setCount(event.target.value)}
+                  <Col md={1} xs={1} sm={1}>
+                    <button
+                      type="button"
+                      className="btn btn-sm ml-3"
+                      onClick={() =>
+                        dispatch(setDetailItem({}))
+                      }
+                    >
+                      <img src="/icon/close.svg" />
+                    </button>
+                  </Col>
+                  <Col md={12} className="mt-2">
+                    <div className="form-group">
+                      <input
+                        type="number"
+                        className="form-control form-control-sm"
+                        value={count}
+                        onChange={(event) => setCount(event.target.value)}
+                      />
+                    </div>
+                  </Col>
+                  <Col md={12}>
+                    <div className="form-group">
+                      <textarea
+                        value={desc}
+                        onChange={(event) => setDesc(event.target.value)}
+                        className="form-control"
+                      />
+                    </div>
+
+                  </Col>
+                  <Col md={12}>
+                    <FooterStockForm
+                      title={title}
+                      countDesc={countDesc}
+                      data={count}
+                      icCount={ic_count}
+                    />
+                  </Col>
+                  <Col md={12}>
+                    {isLoading ? (
+                      <Button variant="primary" disabled>
+                        <Spinner
+                          as="span"
+                          animation="border"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
                         />
-                      </div>
-                      <div className="form-group">
-                        <textarea
-                          value={desc}
-                          onChange={(event) => setDesc(event.target.value)}
-                          className="form-control"
-                        />
-                      </div>
-                    </Col>
-                  </Row>
-                  <div className="mt-2"></div>
-                  <FooterStockForm
-                    title={title}
-                    countDesc={countDesc}
-                    data={count}
-                    icCount={ic_count}
-                  />
-                </Col>
-              </ul>
-            </div>
-          )}
-        </div>
-      </Col>
-      <Col md={12} sm={12} xs={12}>
-        <div className="iq-card-body">
-          <Col md={12} sm={12} xs={12} className="mt-2">
-            {isLoading ? (
-              <Button variant="primary" disabled>
-                <Spinner
-                  as="span"
-                  animation="border"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
-                />
-              </Button>
-            ) : (
-              <ButtonSubmit />
-            )}
+                      </Button>
+                    ) : (
+                      <ButtonSubmit />
+                    )}
+                  </Col>
+
+                </Row>
+              </li>
+            </ul>
           </Col>
-        </div>
+        )}
       </Col>
     </>
   );

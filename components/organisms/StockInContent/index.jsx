@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
-import { Button, Col, Row,Spinner } from "react-bootstrap";
+import { Button, Col, Row, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { setDetailItem } from "redux/action/item";
 import { getItemByLocation } from "../../../services/item";
@@ -25,9 +25,9 @@ export default function StockInContent(props) {
 
   const dispatch = useDispatch();
 
-  const getItemApi = useCallback(async (locIdx, data,token,branch) => {
+  const getItemApi = useCallback(async (locIdx, data, token, branch) => {
     setIsLoading(true);
-    const response = await getItemByLocation(locIdx, data, token,branch);
+    const response = await getItemByLocation(locIdx, data, token, branch);
     setIsLoading(false);
     setItems(response.data.data.item);
   }, []);
@@ -42,79 +42,54 @@ export default function StockInContent(props) {
     setInStock("in");
 
     if (showItems !== false) {
-      getItemApi(locIdx, data,token,branch);
+      getItemApi(locIdx, data, token, branch);
     } else {
       dispatch(setDetailItem([]));
       setItems([]);
     }
   }, [setItems, showItems]);
   return (
-    <div className="container-fluid">
+    <div className="container-fluid ">
       <div className="iq-card">
-        <div className="iq-card-body">
+        <div className="card-body">
+          <Row className="border-bottom">
+            <Col md={8}><h4 className="text-primary">Stok Masuk</h4></Col>
+            <Col md={4}>
+              <Button
+                variant="default border"
+                className="float-right"
+                onClick={() => router.push("/team/stockin/sm")}
+              >
+                <i className="fa fa-plus"></i>
+                Tambah Transaksi Yang Hilang
+              </Button>
+            </Col>
+            <Col md={6} className="p-2 mb-2">
+              <FormOptionLocation placeholderText="Pilih lokasi" />
+            </Col>
+            <Col md={6}>
+              <Button variant="default" className="border float-right">
+                Upload Excel
+              </Button>
+            </Col>
+          </Row>
           <Row>
-            <div className="col-md-12 col-sm-12">
-              <div className="iq-card">
-                <div className="iq-card-body d-flex justify-content-between border-bottom">
-                  <div className="col-md-9 col-sm-9">
-                    <div className="iq-header-title">
-                      <h4 className="card-title text-primary">Stok Masuk</h4>
-                    </div>
-                  </div>
-                  <div className="col-md-3 col-sm-3">
-                    <Button
-                      variant="default border"
-                      className="float-right"
-                      onClick={() => router.push("/team/stockin/sm")}
-                    >
-                      <i className="fa fa-plus"></i>
-                      Tambah Transaksi Yang Hilang
-                    </Button>
-                  </div>
-                </div>
-                <div className="iq-card-body border-bottom">
-                  <Row>
-                    <Col xs={3} md={3}>
-                      <FormOptionLocation />
-                    </Col>
-                    <Col xs={3} md={3}></Col>
-                    <Col xs={3} md={3}>
-                      <Button variant="default" className="border float-right">
-                        Upload Excel
-                      </Button>
-                    </Col>
-                    <Col xs={3} md={3}>
-                      <BarcodeScanner />
-                    </Col>
-                  </Row>
-                </div>
-              </div>
-            </div>
-            <Col xs={12} md={6}>
-              <div className="iq-card">
-                <div className="iq-card-body">
-                  <Col md={12} xs={12} className="mb-3">
-                    <Row>
-                      <Col md={9} xs={9} sm={9}>
-                        <label htmlFor="validationDefault04">
-                          <h5>Stok Tersimpan</h5>
-                        </label>
-                      </Col>
-                    </Row>
-                  </Col>
-                  {isLoading ? (
-                    <Col className="d-flex justify-content-center">
-                      <Spinner as="span" animation="border" size="lg" role="status" aria-hidden="true"/>
-                    </Col>
-                  ) : (
-                    items.length === 0 ? (
-                      <p className="d-flex justify-content-center">Tidak ada data</p>
-                    ) : (
-                      <StockForm item={items} />
-                    )
-                  )}
-                </div>
-              </div>
+            <Col xs={12} md={6} className="mb-4 mt-4">
+              <label htmlFor="validationDefault04">
+                <h5>Stok Tersimpan</h5>
+              </label>
+              {isLoading ? (
+                <Col className="d-flex justify-content-center">
+                  <Spinner as="span" animation="border" size="lg" role="status" aria-hidden="true" />
+                </Col>
+              ) : (
+                items.length === 0 ? (
+                  <p className="d-flex justify-content-center">Pilih lokasi terlebih dahulu</p>
+                ) : (
+                  <StockForm item={items} />
+                )
+              )}
+
             </Col>
             <StockFormItem
               instock={inStock}

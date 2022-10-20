@@ -62,7 +62,6 @@ export default function FormEditBundle(props) {
   const onEditListItem = (idx) => {
     // router.push(`/team/bundle/edit-relation/${idx}`);
     // GO PAGE EDIT LIST ITEM COPY / NO EDIT-RELATION PAGE
-    console.log(idx);
   };
 
   function ButtonAction() {

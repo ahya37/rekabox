@@ -4,7 +4,7 @@ import _ from "lodash";
 import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 import { Button, Col, Row, Spinner } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { setSelectItemBundle } from "redux/action/item";
 import { setSaveBundle } from "services/purchase";

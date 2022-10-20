@@ -45,16 +45,9 @@ export default function EditLinkedItem(props) {
   };
 
   const onSelectedItem = (value) => {
-    // setSelected([...selected, value]);
-    // console.log("data: ", selected);
     const newArray = selected.some(function(m){
       return m.id === value.id;
     });
-    console.log('newArray: ', newArray);
-    console.log('selected: ', selected);
-    // if(!newArray){
-    //   setSelected([...selected, value]);
-    // }
   };
 
   
@@ -125,8 +118,6 @@ export default function EditLinkedItem(props) {
   let sum = _.sumBy(selected, function (m) {
     return parseFloat(m.count);
   });
-
-  console.log("data: ", selected);
 
   function ButtonAction() {
     return (
