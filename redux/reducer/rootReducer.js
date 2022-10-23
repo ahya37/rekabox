@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
   HistoryReducer: HistoryReducer,
   MenuReducer: MenuReducer,
   UserProfileReducer: UserProfileReducer,
-  purchaseReducer: purchaseReducer
+  purchaseReducer: purchaseReducer,
 });
 
 export default rootReducer;

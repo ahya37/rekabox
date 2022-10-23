@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getListItemCreateBundle } from "services/item";
-import { FormBundle, Navbar, Sidebar, EditLinkedItem } from "../../../../components";
 import { getChekAuth } from "services/auth";
-import { ClearRedux } from "services/redux";
+import { getListItemCreateBundle } from "services/item";
 import { getDetailBundle } from "services/purchase";
+import { ClearRedux } from "services/redux";
+import { EditLinkedItem, Navbar, Sidebar } from "../../../../components";
 
 export default function Bundle(props) {
-  const { listItems,detail } = props;
+  const { idx, listItems,detail } = props;
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function Bundle(props) {
       <Sidebar activeMenu="bundle" />
       <div id="content-page" className="content-page">
         <Navbar />
-        <EditLinkedItem item={listItems} dataEdit={detail}/>
+        <EditLinkedItem idx={idx} item={listItems} dataEdit={detail}/>
       </div>
     </div>
   );
@@ -46,6 +46,7 @@ export async function getServerSideProps({ req,params }) {
 
   return {
     props: {
+      idx,
       listItems: listItems.data.data.items,
       detail: detail.data.data.detailBundle,
     },

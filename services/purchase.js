@@ -13,6 +13,17 @@ export async function setSaveBundle(data, token) {
   });
 }
 
+export async function setUpdateItemBundle(data, token) {
+  const url = `${ROOT_API}/api/bundle/item/update`;
+
+  return callAPI({
+    url,
+    method: "POST",
+    data,
+    accessToken: token,
+  });
+}
+
 export async function setDeletePurchaseDetail(data, token) {
   const url = `${ROOT_API}/api/purchase/delete`;
 

@@ -60,7 +60,7 @@ export default function FormEditBundle(props) {
   };
 
   const onEditListItem = (idx) => {
-    // router.push(`/team/bundle/edit-relation/${idx}`);
+    router.push(`/team/bundle/edit-relation/${idx}`);
     // GO PAGE EDIT LIST ITEM COPY / NO EDIT-RELATION PAGE
   };
 
@@ -112,110 +112,30 @@ export default function FormEditBundle(props) {
       </Row>
     );
   }
-  
+
 
   return (
     <div className="container-fluid">
       <div className="iq-card">
-        <div className="iq-card-body">
-          <Row>
-            <div className="col-md-12">
-              <div className="iq-card">
-                <div className="iq-card-body d-flex justify-content-between">
-                  <div className="iq-header-title">
-                    <span>Pembelian & Penjualan</span>
-                    <h4 className="card-title text-primary">{submitStatus === 'update' ? 'Edit Bundel' : 'Copy Bundel'}</h4>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div className="card-body">
+          <div className="iq-header-title">
+            <span>Pembelian & Penjualan</span>
+            <h4 className="card-title text-primary">{submitStatus === 'update' ? 'Edit Bundel' : 'Copy Bundel'}</h4>
+          </div>
+          <Row className="border-bottom mb-2">
             <Col md={7}>
-              <Row>
-                <Col md={12} className="border-bottom ml-4 mb-3">
-                  <h5>Info</h5>
-                </Col>
-              </Row>
-              <div className="col-md-12">
-                <label>
-                  Nama Bundel <sup className={styles["text-required"]}>*</sup>
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  required
-                  value={name}
-                  onChange={(event) => setName(event.target.value)}
-                />
-              </div>
-              <Col md={12} className="mt-3">
-                <Row>
-                  <div className="col-10">
-                    <label htmlFor="validationDefault02">Barcode</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={barcode}
-                      onChange={(event) => setBarcode(event.target.value)}
-                    />
-                    {barcode === item.bundle.ib_barcode &&
-                    submitStatus === "copy" ? (
-                      <span className="text-warning">
-                        <i
-                          className="fa fa-exclamation-triangle"
-                          aria-hidden="true"
-                        ></i>{" "}
-                        Barcode ini sudah tersedia, buat barcode baru
-                      </span>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                  <div className="col-1 mt-3">
-                    <div className="mt-3"></div>
-                    <Button variant="primary" onClick={generateString}>
-                      <i className="fa fa-random" aria-hidden="true"></i>
-                    </Button>
-                  </div>
-                </Row>
-              </Col>
-              <div className="col-md-12 mb-3 mt-3">
-                <label>Biaya</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  value={cost}
-                  onChange={(event) => setCost(event.target.value)}
-                />
-              </div>
-              <div className="col-md-12 mb-3 mt-3">
-                <label>Harga</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  value={price}
-                  onChange={(event) => setPrice(event.target.value)}
-                />
-              </div>
-              <div className="col-md-12 mb-3 mt-3">
-                <label>Note</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={note}
-                  onChange={(event) => setNote(event.target.value)}
-                />
-              </div>
+              <h5>Info</h5>
             </Col>
             <Col md={5}>
-              <Row className="border-bottom mr-1 mb-4">
-                <Col md={5}>
+              <Row>
+                <Col md={11}>
                   <h5>Item Terkait</h5>
                 </Col>
-                <Col md={7}>
+                <Col md={1}>
                   <div
-                    className="float-right mr-4"
+                    className="float-right "
                     style={{ cursor: "pointer" }}
-                    title="Edit Bundel"
+                    title="Edit item bundel"
                   >
                     <i
                       className="fa fa-pencil"
@@ -224,6 +144,82 @@ export default function FormEditBundle(props) {
                   </div>
                 </Col>
               </Row>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={7}>
+              <Row>
+                <Col md={12}>
+                  <label>
+                    Nama Bundel <sup className={styles["text-required"]}>*</sup>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    required
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
+                  />
+                </Col>
+                <Col md={10} className="mt-3">
+                  <label>Barcode</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={barcode}
+                    onChange={(event) => setBarcode(event.target.value)}
+                  />
+                  {barcode === item.bundle.ib_barcode &&
+                    submitStatus === "copy" ? (
+                    <span className="text-warning">
+                      <i
+                        className="fa fa-exclamation-triangle"
+                        aria-hidden="true"
+                      ></i>{" "}
+                      Barcode ini sudah tersedia, buat barcode baru
+                    </span>
+                  ) : (
+                    ""
+                  )}
+
+                </Col>
+                <Col md={2} className="mt-4 align-items-center">
+                  <div className="mt-4"></div>
+                  <Button variant="primary" className="mt-1" onClick={generateString}>
+                    <i className="fa fa-random" aria-hidden="true"></i>
+                  </Button>
+                </Col>
+                <Col md={12} className="mt-3">
+                  <label>Biaya</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={cost}
+                    onChange={(event) => setCost(event.target.value)}
+                  />
+                </Col>
+                <Col md={12} className="mt-3">
+                  <label>Harga</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={price}
+                    onChange={(event) => setPrice(event.target.value)}
+                  />
+
+                </Col>
+                <Col md={12} className="mt-3">
+                  <label>Note</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={note}
+                    onChange={(event) => setNote(event.target.value)}
+                  />
+                </Col>
+              </Row>
+            </Col>
+            <Col md={5}>
               <LinkedItem data={item.detailBundle} />
             </Col>
           </Row>

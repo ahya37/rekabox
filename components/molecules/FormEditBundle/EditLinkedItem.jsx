@@ -2,25 +2,19 @@ import { Number } from "components";
 import Cookies from "js-cookie";
 import _ from "lodash";
 import { useRouter } from "next/router";
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Button, Col, Row, Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
 import { setSelectItemBundle } from "redux/action/item";
-import { setSaveBundle } from "services/purchase";
-import { generate } from "utils/randomstring";
+import { setUpdateItemBundle } from "services/purchase";
+import { toast } from "react-toastify";
 
 export default function EditLinkedItem(props) {
-  const { item, dataEdit } = props;
+  const { idx, item, dataEdit } = props;
   const [isLoading, setIsLoading] = useState(false);
   const [filterData, setFilterData] = useState(item);
   const [qword, setQword] = useState("");
   let [selected, setSelected] = useState([]);
-  const [name, setName] = useState("");
-  const [barcode, setBarcode] = useState("");
-  const [cost, setCost] = useState("");
-  const [price, setPrice] = useState("");
-  const [note, setNote] = useState("");
   let dispatch = useDispatch();
   const IMG = process.env.NEXT_PUBLIC_IMG;
   const router = useRouter();
@@ -44,15 +38,44 @@ export default function EditLinkedItem(props) {
     }
   };
 
-  const onSelectedItem = (value) => {
-    const newArray = selected.some(function(m){
-      return m.id === value.id;
-    });
+
+  const checkItemExist = (id, array) => {
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].it_idx === id) {
+        return array[i];
+      }
+    }
+  }
+
+  const onSelectedItem = (obj) => (value) => {
+    const exist = checkItemExist(value, selected);
+    if (exist === undefined) {
+      const newSelectedItems = {
+        id: obj.id,
+        image: obj.image,
+        it_idx: obj.id,
+        name: obj.name,
+        barcode: obj.barcode,
+        count: obj.count,
+        detail: {
+          category: obj.detail.category,
+          cost: obj.detail.cost,
+          price: obj.detail.price
+        }
+      };
+      setSelected([...selected, newSelectedItems]);
+    } else {
+      const newSelectedItems = selected.map((obj) => {
+        if (obj.it_idx === value) {
+          let newQty = obj.count + 1;
+          return { ...obj, count: parseFloat(newQty) }
+        }
+        return obj;
+      });
+      setSelected(newSelectedItems);
+    }
+
   };
-
-  
-  
-
 
   const unSelectedItem = (value) => {
     const newSelected = selected.filter(function (f) {
@@ -80,40 +103,32 @@ export default function EditLinkedItem(props) {
     router.push("/team/bundle");
   };
 
-  let arrayBundle = [];
+  let items = [];
   const onSubmit = async () => {
     const token = Cookies.get("token");
-    const branch = Cookies.get("branch");
     selected.map((m) => {
-      arrayBundle.push({
-        id: m.id,
+      items.push({
+        id: m.it_idx,
         qty: parseFloat(m.count),
       });
     });
 
     const form = {
-      name,
-      barcode,
-      cost,
-      price,
-      note,
       token,
-      branch,
-      arrayBundle,
+      ib_idx: idx,
+      items,
     };
-
     setIsLoading(true);
-    const response = await setSaveBundle(form, token);
+    const response = await setUpdateItemBundle(form, token);
     setIsLoading(false);
     if (response.error) {
       toast.error(response.message);
     } else {
-      toast.success("Bundel telah disimpan");
+      toast.success("Bundel telah di ubah");
       router.push("/team/bundle");
     }
   };
 
-  selected = _.uniq(selected);
   const countItem = selected.length;
   let sum = _.sumBy(selected, function (m) {
     return parseFloat(m.count);
@@ -160,47 +175,34 @@ export default function EditLinkedItem(props) {
   return (
     <div className="container-fluid">
       <div className="iq-card">
-        <div className="iq-card-body">
+        <div className="card-body">
+          <span>Pembelian & Penjualan</span>
+          <h4 className="card-title text-primary">Edit Bundel</h4>
+          <Row className="border-bottom mb-2">
+            <Col md={6}>
+              <h5>Pilih Item</h5>
+            </Col>
+            <Col md={6}>
+              <h5>Item dan Qty</h5>
+            </Col>
+          </Row>
           <Fragment>
             <Row>
-              <div className="col-md-12">
-                <div className="iq-card">
-                  <div className="iq-card-body d-flex justify-content-between border-bottom">
-                    <div className="iq-header-title">
-                      <span>Pembelian & Penjualan</span>
-                      <h4 className="card-title text-primary">Edit Bundel</h4>
-                    </div>
-                  </div>
-                </div>
-              </div>
               <Col md={6}>
-                <Col md={12}>
-                  <Row>
-                    <Col md={12}>
-                      <label>
-                        <h5>Pilih Item</h5>
-                      </label>
-                    </Col>
-                  </Row>
-                </Col>
-                <Row>
-                  <Col>
-                    <input
-                      type="text"
-                      className="col-md-12 form-control mb-3"
-                      placeholder="Cari nama item ..."
-                      value={qword}
-                      onChange={handleFilter}
-                    />
-                  </Col>
-                </Row>
+                <input
+                  type="text"
+                  className="form-control mb-4"
+                  placeholder="Cari nama item"
+                  value={qword}
+                  onChange={handleFilter}
+                />
                 {filterData.length != 0 &&
                   filterData.slice(0, 5).map((value, key) => {
                     return (
                       <Row
                         style={{ cursor: "pointer" }}
                         key={value.id}
-                        onClick={() => onSelectedItem(value)}
+                        onClick={() => onSelectedItem(value)(value.id)}
                       >
                         <Col>
                           <ul className="col-md-12 list-group list-group-flush border-bottom">
@@ -251,15 +253,6 @@ export default function EditLinkedItem(props) {
                   })}
               </Col>
               <Col md={6}>
-                <Col md={12}>
-                  <Row>
-                    <Col md={12}>
-                      <label>
-                        <h5>Item dan Qty</h5>
-                      </label>
-                    </Col>
-                  </Row>
-                </Col>
                 {selected.length === 0 ? (
                   <Row>
                     <Col md={12}>

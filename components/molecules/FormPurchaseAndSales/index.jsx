@@ -5,15 +5,14 @@ import _ from "lodash";
 import moment from "moment";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
-import { Button, Col, Row, Spinner, Modal } from "react-bootstrap";
+import { Button, Col, Modal, Row, Spinner } from "react-bootstrap";
 import DateRangePicker from "react-bootstrap-daterangepicker";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
-import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
+import { toast } from "react-toastify";
 import { getListAccount } from "services/account";
 import { setSavePurchase } from "services/purchase";
-import { toast } from "react-toastify";
 import { setSaveSales } from "services/sales";
 
 export default function FormPurchaseAndSales({ items, type }) {

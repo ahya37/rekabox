@@ -52,7 +52,7 @@ export default function DetailBundle({ detailBundle }) {
         <Navbar />
         <div className="container-fluid">
           <div className="iq-card">
-            <div className="iq-card-body">
+            <div className="card-body">
               <Row>
                 <Col md={12} className="mb-3">
                   <span>Pembelian & Penjualan</span>
@@ -137,9 +137,9 @@ export default function DetailBundle({ detailBundle }) {
                     </Col>
                     <Col md={7}>
                       <div
-                        className="float-right mr-4"
+                        className="float-right"
                         style={{ cursor: "pointer" }}
-                        title="Edit Bundel"
+                        title="Edit Item Bundel"
                       >
                         <i className="fa fa-pencil" onClick={() => onEditListItem(detailBundle.bundle.ib_idx)}></i>
                       </div>
