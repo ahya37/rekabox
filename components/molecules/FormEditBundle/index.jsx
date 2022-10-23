@@ -66,8 +66,7 @@ export default function FormEditBundle(props) {
 
   function ButtonAction() {
     return (
-      <Row>
-        <Col md={6}>
+        <Col md={12}>
           {isLoading ? (
             <Button variant="primary" disabled>
               <Spinner
@@ -109,7 +108,6 @@ export default function FormEditBundle(props) {
             </>
           )}
         </Col>
-      </Row>
     );
   }
 
@@ -223,9 +221,9 @@ export default function FormEditBundle(props) {
               <LinkedItem data={item.detailBundle} />
             </Col>
           </Row>
-          <Col>
+          <Row>
             <ButtonAction />
-          </Col>
+          </Row>
         </div>
       </div>
     </div>
