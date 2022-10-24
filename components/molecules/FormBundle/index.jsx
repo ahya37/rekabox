@@ -177,35 +177,26 @@ export default function FormBundle(props) {
   return (
     <div className="container-fluid">
       <div className="iq-card">
-        <div className="iq-card-body">
+        <div className="card-body">
+          <span>Pembelian & Penjualan</span>
+          <h4 className="card-title text-primary">
+            Tambah Bundel
+          </h4>
+          <span>
+            Silahkan pilih item untuk didaftarkan sebagai bundel.
+          </span>
           {createForm ? (
             <Fragment>
-              <Row>
-                <div className="col-md-12">
-                  <div className="iq-card">
-                    <div className="iq-card-body d-flex justify-content-between border-bottom">
-                      <div className="iq-header-title">
-                        <span>Pembelian & Penjualan</span>
-                        <h4 className="card-title text-primary">
-                          Tambah Bundel
-                        </h4>
-                        <span>
-                          Silakan item untuk didaftarkan sebagai bundel.
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <Row className="mt-4 border-bottom mb-3">
                 <Col md={6}>
-                  <Col md={12}>
-                    <Row>
-                      <Col md={12}>
-                        <label>
-                          <h5>Pilih Item</h5>
-                        </label>
-                      </Col>
-                    </Row>
-                  </Col>
+                  <h5>Pilih Item</h5>
+                </Col>
+                <Col md={6}>
+                  <h5>Item dan Qty</h5>
+                </Col>
+              </Row>
+              <Row>
+                <Col md={6}>
                   <Row>
                     <Col>
                       <input
@@ -274,15 +265,6 @@ export default function FormBundle(props) {
                     })}
                 </Col>
                 <Col md={6}>
-                  <Col md={12}>
-                    <Row>
-                      <Col md={12}>
-                        <label>
-                          <h5>Item dan Qty</h5>
-                        </label>
-                      </Col>
-                    </Row>
-                  </Col>
                   {data.length === 0 ? (
                     <Row>
                       <Col md={12}>
@@ -373,77 +355,78 @@ export default function FormBundle(props) {
             </Fragment>
           ) : (
             <Fragment>
-              <Row>
-                <div className="col-md-12">
-                  <div className="iq-card">
-                    <div className="iq-card-body d-flex justify-content-between">
-                      <div className="iq-header-title">
-                        <span>Pembelian & Penjualan</span>
-                        <h4 className="card-title text-primary">
-                          Tambah Bundel
-                        </h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <Row className="mt-4 border-bottom mb-3">
                 <Col md={7}>
+                  <h5>Info</h5>
+                </Col>
+                <Col md={5}>
                   <Row>
-                    <Col md={12} className="border-bottom ml-4 mb-3">
-                      <h5>Info</h5>
+                    <Col md={10}>
+                      <h5>Item dan Qty</h5>
+                    </Col>
+                    <Col md={2}>
+                      <Button
+                        variant="link"
+                        onClick={() => setCreateForm(true)}
+                      >
+                        <i className="fa fa-pencil float-right ml-4"></i>
+                      </Button>
                     </Col>
                   </Row>
-                  <div className="col-md-12">
-                    <label>
-                      Nama Bundel{" "}
-                      <sup className={styles["text-required"]}>*</sup>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      required
-                      value={name}
-                      onChange={(event) => setName(event.target.value)}
-                    />
-                  </div>
-                  <Col md={12} className="mt-3">
-                    <Row>
-                      <div className="col-10">
-                        <label htmlFor="validationDefault02">Barcode</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Silahkan generate jika ingin menggunakan barcode"
-                          value={barcode}
-                          onChange={(event) => setBarcode(event.target.value)}
-                        />
-                      </div>
-                      <div className="col-1 mt-3">
-                        <div className="mt-3"></div>
-                        <Button variant="primary" onClick={generateString}>
-                          <i className="fa fa-random" aria-hidden="true"></i>
-                        </Button>
-                      </div>
-                    </Row>
-                  </Col>
-                  <div className="col-md-12 mb-3 mt-3">
-                    <label>Biaya</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      value={cost}
-                      onChange={(event) => setCost(event.target.value)}
-                    />
-                  </div>
-                  <div className="col-md-12 mb-3 mt-3">
-                    <label>Harga</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      value={price}
-                      onChange={(event) => setPrice(event.target.value)}
-                    />
-                  </div>
-                  <div className="col-md-12 mb-3 mt-3">
+                </Col>
+              </Row>
+              <Row>
+                <Col md={7}>
+                  <label>
+                    Nama Bundel{" "}
+                    <sup className={styles["text-required"]}>*</sup>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    required
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
+                  />
+                  <Row>
+                    <Col md={10} className="mt-2">
+                      <label>Barcode</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Silahkan generate jika ingin menggunakan barcode"
+                        value={barcode}
+                        onChange={(event) => setBarcode(event.target.value)}
+                      />
+
+                    </Col>
+                    <Col md={1} className="mt-4 align-items-center">
+                      <div className="mt-4"></div>
+                      <Button variant="primary" onClick={generateString}>
+                        <i className="fa fa-random" aria-hidden="true"></i>
+                      </Button>
+                    </Col>
+                    <Col md={12} className="mt-2">
+                      <label>Biaya</label>
+                      <input
+                        type="number"
+                        className="form-control"
+                        value={cost}
+                        onChange={(event) => setCost(event.target.value)}
+                      />
+
+                    </Col>
+                    <Col md={12} className="mt-2">
+                      <label>Harga</label>
+                      <input
+                        type="number"
+                        className="form-control"
+                        value={price}
+                        onChange={(event) => setPrice(event.target.value)}
+                      />
+
+                    </Col>
+                    <Col md={12} className="mt-2">
                     <label>Note</label>
                     <input
                       type="text"
@@ -451,22 +434,10 @@ export default function FormBundle(props) {
                       value={note}
                       onChange={(event) => setNote(event.target.value)}
                     />
-                  </div>
-                </Col>
-                <Col md={5}>
-                  <Row className="border-bottom mr-1 mb-4">
-                    <Col md={10}>
-                      <h5>Item Terkait</h5>
-                    </Col>
-                    <Col md={1} className="float-right ml-4">
-                      <Button
-                        variant="link"
-                        onClick={() => setCreateForm(true)}
-                      >
-                        <i className="fa fa-pencil"></i>
-                      </Button>
                     </Col>
                   </Row>
+                </Col>
+                <Col md={5}>
                   <LinkedItem data={data} />
                 </Col>
               </Row>

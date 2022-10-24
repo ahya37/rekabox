@@ -15,7 +15,6 @@ export default function BundleContent() {
   const router = useRouter();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [optionButton, setOptionButton] = useState(false);
   const [selected, setSelected] = useState([]);
 
   const getListBundleAPI = useCallback(async (token, branch) => {
@@ -29,7 +28,6 @@ export default function BundleContent() {
     const token = Cookies.get("token");
     const branch = Cookies.get("branch");
     getListBundleAPI(token, branch);
-    setOptionButton();
   }, []);
 
   const { SearchBar } = Search;
@@ -153,30 +151,22 @@ export default function BundleContent() {
   return (
     <div className="container-fluid">
       <div className="iq-card">
-        <div className="iq-card-body">
+        <div className="card-body">
+          <span>Pembelian & Penjualan</span>
+          <h4 className="card-title text-primary">Bundel</h4>
+          <div className="border-bottom mb-4"></div>
           <Row>
-            <div className="col-md-12">
-              <div className="iq-card">
-                <div className="iq-card-body d-flex justify-content-between border-bottom">
-                  <div className="col-md-10 col-sm-10">
-                    <div className="iq-header-title">
-                      <span>Pembelian & Penjualan</span>
-                      <h4 className="card-title text-primary">Bundel</h4>
-                    </div>
-                  </div>
-                  <div className="col-md-2 col-sm-2 ">
-                    <Button
-                      variant="primary"
-                      className="float-right"
-                      onClick={() => router.push("/team/bundle/add")}
-                    >
-                      <i className="fa fa-plus"></i>
-                      Tambah
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <Col md={6}></Col>
+            <Col md={6}>
+              <Button
+                variant="primary"
+                className="float-right mb-4"
+                onClick={() => router.push("/team/bundle/add")}
+              >
+                <i className="fa fa-plus"></i>
+                Tambah
+              </Button>
+            </Col>
           </Row>
           <Row>
             <Col md={12}>
@@ -204,8 +194,7 @@ export default function BundleContent() {
                         <div className="float-right">
                           <SearchBar
                             {...props.searchProps}
-                            className="col-md-12"
-                            placeholder="Cari..."
+                            placeholder="Cari"
                           />
                         </div>
                       </Col>
