@@ -2,7 +2,9 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { Button, Col, Row, Spinner } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import Select, { components } from "react-select";
+import { setListAccount, setShowFormAccount } from "redux/action/account";
 import { getListAccountOwnerOnly } from "services/account";
 import { getListLocationItem } from "services/locationitem";
 import { getItemByLocation } from "../../../services/item";
@@ -10,22 +12,28 @@ import {
   StockForm,
   StockFormItem
 } from "../../molecules";
+import ModalFormAccount from "../ModalFormAccount";
 
 export default function StockInContent() {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [qword, setQword] = useState("");
   const [inStock, setInStock] = useState("");
-  const [account, setAccount] = useState([]);
   const [filterData, setFilterData] = useState([]);
-  const [show, setShow] = useState(false);
   const [selectAccount, setSelectAccount] = useState("");
   const [brlocIdx, setBrlocIdx] = useState("");
 
-  const router = useRouter();
+  const { listAccount } = useSelector((state) => state.accountReducer);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const router   = useRouter();
+  const dispatch = useDispatch();
+
+  const handleShow = () => {
+    dispatch(setShowFormAccount(true));
+  };
+
+  const token = Cookies.get("token");
+  const branch = Cookies.get("branch");
 
   const handleFilter = (event) => {
     const searchWord = event.target.value;
@@ -51,7 +59,7 @@ export default function StockInContent() {
 
   const getListAccountAPI = useCallback(async (token, branch) => {
     const response = await getListAccountOwnerOnly(token, branch);
-    setAccount(response?.data.data.accounts);
+    dispatch(setListAccount(response?.data.data.accounts));
   });
 
   // GET LOKASI BRANCH MODE BASIC. HANYA SATU LOKASI
@@ -62,8 +70,6 @@ export default function StockInContent() {
 
 
   useEffect(() => {
-    const token = Cookies.get("token");
-    const branch = Cookies.get("branch");
     const locIdx = 'all';
     const data = new FormData();
     data.append("token", token);
@@ -73,7 +79,7 @@ export default function StockInContent() {
     getLocationAPI(token, branch);
   }, []);
 
-  const optionsAccount = account.map((d) => ({
+  const optionsAccount = listAccount.map((d) => ({
     value: d.ac_idx,
     label: d.ac_name,
   }));
@@ -99,10 +105,11 @@ export default function StockInContent() {
     )
   }
 
+
   const handleChangeAccount = (e) => {
     setSelectAccount(e)
   }
-  
+
   return (
     <div className="container-fluid ">
       <div className="iq-card">
@@ -120,7 +127,7 @@ export default function StockInContent() {
               </Button>
             </Col>
             <Col md={3} className="p-3 mb-2">
-            <Select
+              <Select
                 components={{
                   MenuList,
                   MenuListFooter: (
@@ -171,9 +178,11 @@ export default function StockInContent() {
               account={selectAccount}
               brlocIdx={brlocIdx}
               brMode="Basic"
-              
+
             />
           </Row>
+
+         <ModalFormAccount type="Suplier"/>
         </div>
       </div>
     </div>

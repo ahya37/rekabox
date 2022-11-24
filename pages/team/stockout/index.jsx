@@ -1,13 +1,29 @@
-import { StockOutContent, Navbar, Sidebar } from "../../../components";
+import { StockOutContent, Navbar, Sidebar, StockOutContentBasic } from "../../../components";
 import { ClearRedux } from "../../../services/redux";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getChekAuth } from "../../../services/auth";
 
 export default function StokOut() {
+  const [content, setContent] = useState("");
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(ClearRedux());
+    const localData  = JSON.parse(localStorage.getItem('branch'));
+
+    if (localData.br_mode === 'Basic') {
+      setContent(
+        <StockOutContentBasic />
+      )
+      
+    }else{
+      setContent(
+        <StockOutContent />
+       
+      )
+    }
+
   }, []);
 
   return (
@@ -15,7 +31,7 @@ export default function StokOut() {
       <Sidebar activeMenu="stockout" />
       <div id="content-page" className="content-page">
         <Navbar />
-        <StockOutContent />
+        {content}
       </div>
     </div>
   );

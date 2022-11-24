@@ -30,8 +30,10 @@ import BundleContent from "./BundleContent";
 import PurchaseContent from "./PurchaseContent";
 import AccountContent from "./AccountContent";
 import SalesContent from "./SalesContent";
+import ModalFormAccount from "./ModalFormAccount";
 
 export {
+  ModalFormAccount,
   SalesContent,
   StockInContentBasic,
   AccountContent,

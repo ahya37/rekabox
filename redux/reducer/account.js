@@ -1,7 +1,9 @@
 import ActionType from "redux/type";
 
 const inittialState = {
-    selectedAccount: {}
+    selectedAccount: {},
+    showFormAccount: false,
+    listAccount: []
 };
 
 const accountReducer = (state = inittialState, action) => {
@@ -10,6 +12,17 @@ const accountReducer = (state = inittialState, action) => {
             return {
                 ...state,
                 selectedAccount: action.value
+            }
+
+        case ActionType.SET_SHOW_FORM_ACCOUNT:
+            return {
+                ...state,
+                showFormAccount: action.value
+            }
+        case ActionType.SET_LIST_ACCOUNT:
+            return {
+                ...state,
+                listAccount: action.value
             }
 
         default:
