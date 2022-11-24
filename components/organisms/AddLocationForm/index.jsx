@@ -14,9 +14,6 @@ export default function AddLocationForm() {
   const router = useRouter();
 
   const onSubmit = async () => {
-    const getLocalForm = localStorage.getItem("userProfile");
-    const userProfileInfo = JSON.parse(getLocalForm);
-
     const token = Cookie.get('token');
     const branch = Cookie.get('branch');
     const formData = {
