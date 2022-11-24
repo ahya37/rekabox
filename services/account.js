@@ -13,6 +13,17 @@ export async function getListAccount(token, branch) {
   });
 }
 
+export async function getListAccountOwnerOnly(token, branch) {
+  let params = `?token=${token}&branch=${branch}`;
+  const url = `${ROOT_API}/api/account/list/onlyowner${params}`;
+
+  return callAPI({
+    url: url,
+    method: "GET",
+    accessToken: token,
+  });
+}
+
 export async function setSaveAccount(data, token) {
   const url = `${ROOT_API}/api/account/store`;
 

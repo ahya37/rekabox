@@ -26,8 +26,10 @@ import EditLinkedItem from "./FormEditBundle/EditLinkedItem";
 import FormEditPurchase from "./FormEditPurchase";
 import FormPurchaseAndSales from "./FormPurchaseAndSales";
 import FormEditSales from "./FormEditSales";
+import FormSelectAccount from "./FormSelectAccount";
 
 export {
+  FormSelectAccount,
   FormEditSales,
   FormPurchaseAndSales,
   FormEditPurchase,

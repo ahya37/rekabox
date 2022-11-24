@@ -12,9 +12,11 @@ import {
 import { setDetailItem, setSelectItemLocation } from "redux/action/item";
 
 
-export default function StocFormItem(props) {
-  const { title, countDesc, brlocIdx, brMode } = props;
+export default function StockFormItem(props) {
+  const { title, countDesc, brlocIdx, brMode, account} = props;
   const { showItems, detailItem } = useSelector((state) => state.itemReducer);
+  const { selectedAccount } = useSelector((state) => state.accountReducer);
+  const {selectAccount} = selectedAccount;
   const { value } = showItems;
   const {
     it_idx,
@@ -44,15 +46,16 @@ export default function StocFormItem(props) {
   const optionLocIdx = brMode === 'Basic' ? brlocIdx : locIdx;
 
   const onSubmit = async () => {
+    
     const useForm = {
       count,
       it_idx,
       token,
       optionLocIdx,
       desc,
-      branch
+      branch,
+      account: account.value
     };
-
 
     const data = new FormData();
     data.append("lc_itidx", useForm.it_idx);
@@ -62,6 +65,7 @@ export default function StocFormItem(props) {
     data.append("in_br_idx", useForm.branch);
     data.append("token", useForm.token);
     data.append("in_status", props.instock);
+    data.append("in_account_idx", useForm.account);
 
     const response = "";
     if (props.instock === "audit") {
@@ -122,11 +126,13 @@ export default function StocFormItem(props) {
     );
   }
 
+
+
   return (
     <>
       <Col md={6} sm={12} xs={12} className="mt-4">
           {!it_idx ? (
-            <div className="border-bottom">
+            <div className="border-bottom text-center">
               Tidak ada item terpilih
             </div>
           ) : (

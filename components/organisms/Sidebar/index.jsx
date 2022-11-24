@@ -15,6 +15,7 @@ export default function Sidebar(props) {
   const [branch, setBranch] = useState({
     br_name: ""
   });
+  const [mounted, setMounted] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -29,6 +30,7 @@ export default function Sidebar(props) {
   },[]);
 
   useEffect(() => {
+    setMounted(true);
     const dataBranch = localStorage.getItem('branch');
     setBranch(JSON.parse(dataBranch));
     const token = Cookies.get("token");
@@ -37,7 +39,7 @@ export default function Sidebar(props) {
     getAllBranchAPI(token);
   }, []);
 
-  return (
+  return mounted &&  (
     <div className="iq-sidebar">
       <div className="iq-sidebar-logo d-flex justify-content-between">
         <a href="index.html">

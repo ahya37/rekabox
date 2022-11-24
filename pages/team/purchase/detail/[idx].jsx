@@ -272,7 +272,7 @@ export default function Detail(props) {
                                           <th className="text-right">
                                             Quantity
                                           </th>
-                                          <th className="text-right">Biaya</th>
+                                          <th className="text-right">Unit Harga</th>
                                           <th>
                                             {" "}
                                             <span className="float-right">
@@ -397,7 +397,7 @@ export default function Detail(props) {
                                                 colSpan={5}
                                                 className="text-right"
                                               >
-                                                {item.dt_qty}
+                                                {item.it_qty}
                                               </td>
                                             </tr>
                                           )

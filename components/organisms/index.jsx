@@ -14,6 +14,7 @@ import ItemContent from "./ItemContent";
 import LocationContent from "./LocationContent";
 import SignUpForm from "./SignUpForm";
 import StockInContent from "./StockInContent";
+import StockInContentBasic from "./StockInContentBasic";
 import StockInMissingContent from "./StockInMissingContent";
 import StockMoveContent from "./StockMoveContent";
 import StockOutContent from "./StockOutContent";
@@ -32,6 +33,7 @@ import SalesContent from "./SalesContent";
 
 export {
   SalesContent,
+  StockInContentBasic,
   AccountContent,
   PurchaseContent,
   BundleContent,

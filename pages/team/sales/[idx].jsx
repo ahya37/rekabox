@@ -390,7 +390,7 @@ export default function Detail(props) {
                                                                                     <th>Nama</th>
                                                                                     <th colSpan={5}>
                                                                                         <strong className="float-right">
-                                                                                            Jumlah
+                                                                                            Quantity Yang Keluar
                                                                                         </strong>
                                                                                     </th>
                                                                                 </tr>
