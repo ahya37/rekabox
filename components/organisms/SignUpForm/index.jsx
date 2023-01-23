@@ -41,34 +41,34 @@ export default function SignUpForm() {
     <>
       <form action="#" method="post" className="mt-4">
         <div className="form-group first">
+          <label>{userFullName === "" ? "Nama Lengkap" : ""}</label>
           <input
             type="text"
             className="form-control"
             id="name"
             value={userFullName}
-            placeholder="Nama Lengkap"
             required
             onChange={(event) => setUserFullName(event.target.value)}
           />
         </div>
         <div className="form-group first">
+          <label>{userEmail === "" ? "Email" : ""}</label>
           <input
             type="text"
             className="form-control"
             id="username"
             value={userEmail}
-            placeholder="Email"
             required
             onChange={(event) => setUserEmail(event.target.value)}
           />
         </div>
         <div className="form-group last mb-4">
+        <label>{userPass === "" ? "Password" : ""}</label>
           <input
             type="password"
             className="form-control"
             id="password"
             value={userPass}
-            placeholder="Password"
             required
             onChange={(event) => setUserPass(event.target.value)}
           />

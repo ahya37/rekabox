@@ -21,7 +21,7 @@ export default function Sidebar(props) {
 
   const getMenuAPI = useCallback(async (token,branch) => {
     const response = await getMenu(token,branch);
-    dispatch(setMenu(response.data.data.menu));
+    dispatch(setMenu(response?.data.data.menu));
   }, []);
 
   const getAllBranchAPI = useCallback(async (token) => {
@@ -32,12 +32,15 @@ export default function Sidebar(props) {
   useEffect(() => {
     setMounted(true);
     const dataBranch = localStorage.getItem('branch');
-    setBranch(JSON.parse(dataBranch));
+    const branches = JSON.parse(dataBranch);
+
+    setBranch(branches);
     const token = Cookies.get("token");
-    const branch = Cookies.get("branch");
-    getMenuAPI(token, branch);
+    getMenuAPI(token, branches.br_idx);
     getAllBranchAPI(token);
+
   }, []);
+
 
   return mounted &&  (
     <div className="iq-sidebar">

@@ -7,6 +7,7 @@ import { setLogin } from "../../../services/auth";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { getMenu, getMyprofile } from "../../../services/users";
+import { setMenu } from "redux/action/menu";
 
 export default function SignInForm() {
   const [email, setEmail] = useState("");
@@ -43,13 +44,9 @@ export default function SignInForm() {
         const branch = userProfile.data.branch.br_idx;
         Cookies.set("token", token);
         Cookies.set("branch", branch);
-
-        // SET REDUX APPS MENU
-        
         const responseMenu = await getMenu(token, branch);
-        dispatch({ type: "SET_MENU", value: responseMenu.data.data.menu });
-        const tokens = Cookies.get("token");
-        const result = await getMyprofile(tokens);
+        dispatch(setMenu(responseMenu.data.data.menu));
+        const result = await getMyprofile(token);
         dispatch({ type: "SET_PROFILE", value: result.data.data.user });
       }
     }
@@ -64,7 +61,7 @@ export default function SignInForm() {
       <div className="form-group  mt-4">
         {onUsername ? (
           <>
-            <label htmlFor="username">Username</label>
+            <label htmlFor="username">{username === "" ? "Username" : ""}</label>
             <input
               type="text"
               className="form-control"
@@ -73,19 +70,19 @@ export default function SignInForm() {
             />
           </>
         ) : (
-          <>
-            <label htmlFor="username">Email</label>
+          <div className="form-group last mt-4">
+            <label htmlFor="username">{email === "" ? "Email" : ""}</label>
             <input
               type="text"
               className="form-control"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
             />
-          </>
+          </div>
         )}
       </div>
       <div className="form-group last mb-4">
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">{password === "" ? "Password" : ""}</label>
         <input
           type="password"
           className="form-control"

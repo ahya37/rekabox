@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { setGoHome } from "../../../services/auth";
 import { getMenu } from "../../../services/users";
+import { setMenu } from "../../../redux/action/menu";
 
 export default function Welcome() {
   const [isLoading, setIsLoading] = useState(false);
@@ -30,17 +31,15 @@ export default function Welcome() {
     } else {
       localStorage.removeItem("userProfile");
       const userProfile = response.data;
-      const branch      = response.data.data.branch;
+      const branch = response.data.data.branch;
       localStorage.setItem("userProfile", JSON.stringify(userProfile));
       localStorage.setItem("branch", JSON.stringify(branch));
       const token = userProfile.data.access_token;
       Cookies.set("token", token);
       Cookies.set("branch", response.data.data.branch);
 
-      // SET REDUX APPS MENU
       const responseMenu = await getMenu(token, branch.br_idx);
-      dispatch({ type: "SET_MENU", value: responseMenu.data.data.menu });
-
+      dispatch(setMenu(responseMenu.data.data.menu))
       toast.success("Login Berhasil");
       router.push("/team/item");
     }
