@@ -74,7 +74,7 @@ export default function ShowDetailItem(props) {
                 </div>
                 <div className="card">
                   {locations.map((location) => (
-                    <div className="card-body" key={location.lc_loidx}>
+                    <div className="card-body" key={location.lc_idx}>
                       <div className="row">
                         <div className="col-md-2">
                           <Image src="/icon/map.svg" width={15} height={15} />

@@ -7,7 +7,7 @@ import Select, { components } from "react-select";
 import { setListAccount, setShowFormAccount } from "redux/action/account";
 import { getListAccountOwnerOnly } from "services/account";
 import { getListLocationItem } from "services/locationitem";
-import { getItemByLocation } from "../../../services/item";
+import { getListItem } from "../../../services/item";
 import {
   StockForm,
   StockFormItem
@@ -17,15 +17,13 @@ import ModalFormAccount from "../ModalFormAccount";
 export default function StockInContent() {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [qword, setQword] = useState("");
   const [inStock, setInStock] = useState("");
-  const [filterData, setFilterData] = useState([]);
   const [selectAccount, setSelectAccount] = useState("");
   const [brlocIdx, setBrlocIdx] = useState("");
 
   const { listAccount } = useSelector((state) => state.accountReducer);
 
-  const router   = useRouter();
+  const router = useRouter();
   const dispatch = useDispatch();
 
   const handleShow = () => {
@@ -35,26 +33,11 @@ export default function StockInContent() {
   const token = Cookies.get("token");
   const branch = Cookies.get("branch");
 
-  const handleFilter = (event) => {
-    const searchWord = event.target.value;
-
-    setQword(searchWord);
-    const newFilter = items.filter((value) => {
-      return value.it_name.toLowerCase().includes(searchWord.toLowerCase());
-    });
-    if (searchWord === "") {
-      setFilterData(items);
-    } else {
-      setFilterData(newFilter);
-    }
-  };
-
-  const getItemApi = useCallback(async (locIdx, data, token, branch) => {
+  const getItemApi = useCallback(async (token, branch) => {
     setIsLoading(true);
-    const response = await getItemByLocation(locIdx, data, token, branch);
+    const response = await getListItem(token, branch);
     setIsLoading(false);
-    setItems(response.data.data.item);
-    setFilterData(response.data.data.item);
+    setItems(response?.data.data.item);
   }, []);
 
   const getListAccountAPI = useCallback(async (token, branch) => {
@@ -62,27 +45,27 @@ export default function StockInContent() {
     dispatch(setListAccount(response?.data.data.accounts));
   });
 
-  // GET LOKASI BRANCH MODE BASIC. HANYA SATU LOKASI
   const getLocationAPI = useCallback(async (token, branch) => {
     const response = await getListLocationItem(token, branch);
     setBrlocIdx(response?.data.data.location[0].loc_idx)
-  })
+  });
 
 
   useEffect(() => {
-    const locIdx = 'all';
-    const data = new FormData();
-    data.append("token", token);
     setInStock("in");
-    getItemApi(locIdx, data, token, branch);
+    getItemApi(token, branch);
     getListAccountAPI(token, branch);
     getLocationAPI(token, branch);
   }, []);
 
-  const optionsAccount = listAccount.map((d) => ({
-    value: d.ac_idx,
-    label: d.ac_name,
-  }));
+  const optionsAccount = [{}];
+  if (listAccount.length !== 0 ) {
+    optionsAccount = listAccount.map((d) => ({
+      value: d.ac_idx,
+      label: d.ac_name,
+    }));
+    
+  }
 
   const MenuList = (props) => {
     const {
@@ -150,26 +133,17 @@ export default function StockInContent() {
           </Row>
           <Row>
             <Col xs={12} md={6} className="mb-4 mt-2">
-              <input
-                type="text"
-                className="form-control mb-2"
-                placeholder="Cari nama item "
-                value={qword}
-                onChange={handleFilter}
-
-              />
-              {isLoading ? (
+              {isLoading? (
                 <Col className="d-flex justify-content-center">
-                  <Spinner as="span" animation="border" size="lg" role="status" aria-hidden="true" />
-                </Col>
+                <Spinner as="span" animation="border" size="lg" role="status" aria-hidden="true" />
+              </Col>
               ) : (
                 items.length === 0 ? (
-                  <p className="d-flex justify-content-center">Pilih lokasi terlebih dahulu</p>
+                  ''
                 ) : (
-                  <StockForm item={filterData} />
+                  <StockForm item={items} />
                 )
               )}
-
             </Col>
             <StockFormItem
               instock={inStock}
@@ -182,7 +156,7 @@ export default function StockInContent() {
             />
           </Row>
 
-         <ModalFormAccount type="Suplier"/>
+          <ModalFormAccount type="Suplier" />
         </div>
       </div>
     </div>

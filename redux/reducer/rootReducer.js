@@ -6,6 +6,7 @@ import UserProfileReducer from "./user";
 import purchaseReducer from './purchase'
 import salesReducer from "./sales";
 import accountReducer from "./account";
+import locationReducer from "./location";
 
 const rootReducer = combineReducers({
   salesReducer: salesReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   UserProfileReducer: UserProfileReducer,
   purchaseReducer: purchaseReducer,
   accountReducer: accountReducer,
+  locationReducer: locationReducer,
 });
 
 export default rootReducer;

@@ -50,3 +50,23 @@ export const setSelectItemMixBundle = (value) => ({
   value,
 });
 
+export const setListItems = (value) => ({
+  type: ActionType.SET_LIST_ITEMS,
+  value
+});
+
+export const setLoading = (value) => ({
+  type: ActionType.SET_LOADING,
+  value
+})
+
+export const setDataItems = (value) => ({
+  type: ActionType.SET_DATA_ITEMS,
+  value
+})
+
+export const setAuditItems = (value) => ({
+  type: ActionType.SET_AUDIT_ITEM,
+  value
+})
+

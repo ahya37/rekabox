@@ -7,9 +7,10 @@ import { FooterStockForm } from "..";
 import { setSaveStockMissingItem } from "../../../services/item";
 import { toast } from "react-toastify";
 import { setDetailItem, setFromDateStockMissing, setSelectItemLocation, setShowItems } from "redux/action/item";
+import moment from "moment";
 
 export default function StockMissingFormItem(props) {
-  const { title, countDesc } = props;
+  const { title, countDesc, brlocIdx, brMode, account } = props;
   const { showItems, detailItem, formDateStockMissing } = useSelector(
     (state) => state.itemReducer
   );
@@ -24,7 +25,7 @@ export default function StockMissingFormItem(props) {
     lc_loidx,
   } = detailItem;
 
-  const [count, setCount] = useState("1");
+  const [count, setCount] = useState(1);
   const [desc, setDesc] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -33,12 +34,20 @@ export default function StockMissingFormItem(props) {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const locIdx = !value ? lc_loidx : value;
+  let locIdx = !value ? lc_loidx : value;
 
   const onSubmit = async () => {
+
+    if (brMode === 'Basic') {
+      locIdx = brlocIdx;
+    }else{
+      locIdx === undefined ? "" : locIdx;
+    }
+
     const token = Cookies.get("token");
     const branch = Cookies.get("branch");
     const useForm = {
+      account: account.value === undefined ? "" : account.value,
       count,
       it_idx,
       token,
@@ -49,15 +58,18 @@ export default function StockMissingFormItem(props) {
       branch
     };
 
+
     const data = new FormData();
     data.append("lc_itidx", useForm.it_idx);
-    data.append("lc_count", useForm.count);
+    data.append("lc_count", parseInt(useForm.count));
     data.append("in_desc", useForm.desc);
     data.append("lc_loidx", useForm.locIdx);
     data.append("token", useForm.token);
     data.append("in_status", props.instock);
     data.append("in_br_idx", useForm.branch);
-    data.append("date", useForm.formDateStockMissing);
+    data.append("in_account_idx", useForm.account);
+    data.append("date", useForm.formDateStockMissing); 
+
 
     setIsLoading(true);
     const response = await setSaveStockMissingItem(data, token);
@@ -68,9 +80,9 @@ export default function StockMissingFormItem(props) {
     } else {
       dispatch(setDetailItem({}));
       dispatch(setSelectItemLocation([]));
-      dispatch(setFromDateStockMissing(""));
+      dispatch(setFromDateStockMissing(moment().format("MM/DD/YYYY")));
       dispatch(setShowItems(false))
-      setCount(null);
+      setCount(1);
       setDesc("");
 
       if (props.instock === "in") {
@@ -136,9 +148,9 @@ export default function StockMissingFormItem(props) {
                     )}
                   </Col>
                   <Col md={9}>
-                    <smal>
+                    <small>
                       {it_name} ({it_serial_number})
-                    </smal>
+                    </small>
                     <br />
                     <small>{loc_name}</small>
                   </Col>

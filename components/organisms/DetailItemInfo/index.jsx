@@ -36,6 +36,7 @@ export default function DetailItemInfo(props) {
       data,
       token
     );
+    
     setIsLoading(true);
     dispatch({ type: "SET_HISTORY_BY_LOCATION", value: response?.data.data });
     dispatch({ type: "SET_DETAIL_HISTORY", value: [] });

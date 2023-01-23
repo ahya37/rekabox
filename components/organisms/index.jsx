@@ -31,8 +31,12 @@ import PurchaseContent from "./PurchaseContent";
 import AccountContent from "./AccountContent";
 import SalesContent from "./SalesContent";
 import ModalFormAccount from "./ModalFormAccount";
+import ModalFormLocation from "./ModalFormLocation";
+import AuditContentBasic from "./AuditContentBasic";
 
 export {
+  AuditContentBasic,
+  ModalFormLocation,
   ModalFormAccount,
   SalesContent,
   StockInContentBasic,

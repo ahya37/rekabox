@@ -3,7 +3,7 @@ export const setListHistories = (value) => ({
   value,
 });
 
-export const setDetailHistory = (value) => (dispatch) => ({
+export const setDetailHistory = (value) => ({
   type: "SET_DETAIL_HISTORY",
   value,
 });

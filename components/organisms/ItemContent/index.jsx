@@ -1,10 +1,9 @@
 import { useRouter } from "next/router";
 import { Button } from "react-bootstrap";
-import { useSelector } from "react-redux";
 import ShowDetailItem from "./ShowDetailItem";
 import ShowItem from "./ShowItem";
 
-export default function ItemContent(props) {
+export default function ItemContent(pops) {
   const router = useRouter();
   return (
     <div className="container-fluid">

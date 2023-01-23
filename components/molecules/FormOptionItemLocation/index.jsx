@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Select from "react-select";
+import { setFromLocIdx } from "redux/action/item";
 import { getItemByLocation } from "../../../services/item";
 import {
   getListLocationItem,
@@ -55,7 +56,7 @@ export default function FormOptionItemLocation(props) {
       const dataItem = response.data.data.item;
       dispatch({ type: "SET_ITEM_BY_LOCATION", value: dataItem });
       dispatch({ type: "SET_DETAIL_ITEM", value: {} });
-      dispatch({ type: "SET_FROM_LOCIDX", value: { locIdx } });
+      dispatch(setFromLocIdx({locIdx}));
     }
   };
 

@@ -107,6 +107,7 @@ export default function AddItemForm() {
     data.append("it_br_idx", useForm.branch);
     data.append("it_cost", useForm.cost);
     data.append("it_price", useForm.price);
+    data.append("it_desc", useForm.desc);
 
     setIsLoading(true);
     const response = await setSaveItem(data, token);

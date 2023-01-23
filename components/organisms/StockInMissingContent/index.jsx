@@ -12,6 +12,7 @@ import {
   StockForm,
   StockMissingFormItem
 } from "../../molecules";
+import styles from "../../../styles/Fileupload.module.css";
 
 export default function StockInMissingContent() {
   const [date, setDate] = useState(moment().format("MM/DD/YYYY"));
@@ -34,12 +35,11 @@ export default function StockInMissingContent() {
     const token = Cookies.get("token");
     const branch = Cookies.get("branch");
     setInStock("in");
-    if (showItems !== false) {
-      getItemApi(token, branch);
-    } else {
-      dispatch(setDetailItem([]))
-      setItems([]);
-    }
+
+    getItemApi(token, branch);
+    dispatch(setDetailItem([]))
+    setItems([]);
+
     dispatch(setFromDateStockMissing(date))
   }, [setItems, showItems]);
 
@@ -68,21 +68,27 @@ export default function StockInMissingContent() {
                 />
               </DateRangePicker>
             </Col>
-            <Col md={6} className="p-2 mb-2">
-            <FormOptionLocation  placeholderText="Pilih lokasi"/>
+            <Col md={1}>
+              <label>Lokasi <sup className={styles["text-required"]}>*</sup></label>
+            </Col>
+            <Col md={5} className="mb-2">
+              <FormOptionLocation placeholderText="Pilih lokasi" />
             </Col>
           </Row>
           <Row>
             <Col xs={12} md={6} className="mb-4 mt-4">
-            <label htmlFor="validationDefault04">
-                <h5>Stok Tersimpan</h5>
-              </label>
-                  <StockForm item={items} />
+              {items.length === 0 ? (
+                ''
+              ) : (
+                <StockForm item={items} />
+
+              )}
             </Col>
             <StockMissingFormItem
               instock={inStock}
               title="Stok Masuk"
               countDesc="Stok Masuk"
+              brlocIdx=""
             />
           </Row>
         </div>

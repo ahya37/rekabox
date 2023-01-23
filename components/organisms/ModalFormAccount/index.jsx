@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { setListAccount, setShowFormAccount } from "redux/action/account";
 import styles from "../../../styles/Fileupload.module.css";
 import Cookies from "js-cookie";
-import { getListAccountOwnerOnly, setSaveAccount } from "services/account";
+import { getListAccountCustomerOnly, getListAccountOwnerOnly, setSaveAccount } from "services/account";
 
 export default function ModalFormAccount({type}) {
     const { showFormAccount } = useSelector((state) => state.accountReducer);
@@ -21,13 +21,18 @@ export default function ModalFormAccount({type}) {
         dispatch(setShowFormAccount(false))
     };
 
-    const getListAccountAPI = useCallback(async (token, branch) => {
-        const response = await getListAccountOwnerOnly(token, branch);
-        dispatch(setListAccount(response?.data.data.accounts));
+    const getListAccountAPI = useCallback(async (token, branch, type) => {
+        if (type === 'Suplier') {
+            const response = await getListAccountOwnerOnly(token, branch);
+            dispatch(setListAccount(response?.data.data.accounts));
+        }else{
+            const response = await getListAccountCustomerOnly(token, branch);
+            dispatch(setListAccount(response?.data.data.accounts));
+        }
     });
 
     useEffect(() => {
-        getListAccountAPI(token, branch);
+        getListAccountAPI(token, branch, type);
     }, []);
 
     const onSave = useCallback(async (values) => {
@@ -37,7 +42,6 @@ export default function ModalFormAccount({type}) {
         if (!values.name) {
             toast.error("Silahkan isi nama akun !");
         } else {
-
             const formData = new FormData();
             formData.append("type", type);
             formData.append("name", values.name);
@@ -54,8 +58,15 @@ export default function ModalFormAccount({type}) {
                 toast.error(response.message);
             } else {
                 toast.success(response.data.meta.message);
-                getListAccountAPI(token, branch);
+                if (type === 'Suplier') {
+                    const response = await getListAccountOwnerOnly(token, branch);
+                    dispatch(setListAccount(response?.data.data.accounts));
+                }else{
+                    const response = await getListAccountCustomerOnly(token, branch);
+                    dispatch(setListAccount(response?.data.data.accounts));
+                }
                 dispatch(setShowFormAccount(false))
+                
                 
             }
         }

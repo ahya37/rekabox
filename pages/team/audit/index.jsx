@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react";
-import { AuditContent, Navbar, Sidebar } from "../../../components";
-import { getChekAuth } from "../../../services/auth";
-import { ClearRedux } from "../../../services/redux";
-import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
+import { AuditContent, AuditContentBasic, Navbar, Sidebar } from "../../../components";
+import { getChekAuth } from "../../../services/auth";
 import { getListItem } from "../../../services/item";
 import { getLocationItemByBrIdx } from "../../../services/locationitem";
+import { ClearRedux } from "../../../services/redux";
 
 
-export default function Audit({dataItems,branchLocation}) {
+export default function Audit({ dataItems }) {
   const { selectItemLocation } = useSelector((state) => state.itemReducer);
   const [brMode, setBrMode] = useState("");
-  let items = [];
-  let brlocIdx = "";
 
   const dispatch = useDispatch();
+
 
   useEffect(() => {
     dispatch(ClearRedux());
@@ -22,19 +20,20 @@ export default function Audit({dataItems,branchLocation}) {
     setBrMode(dataLocal.br_mode);
   }, []);
 
-  if(brMode === 'Basic'){
-    items = dataItems;
-    brlocIdx = branchLocation;
-  }else{
-    items = selectItemLocation
-  }
+  console.log('data items:', dataItems);
 
   return (
     <div className="wrapper">
       <Sidebar activeMenu="audit" />
       <div id="content-page" className="content-page">
         <Navbar />
-        <AuditContent branch={brMode} item={items} brlocIdx={brlocIdx}/>
+        {
+          brMode === "Lokasi" ? (
+            <AuditContent item={selectItemLocation} />
+          ) : (
+            <AuditContentBasic item={dataItems}/>
+          )
+        }
       </div>
     </div>
   );

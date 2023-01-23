@@ -11,6 +11,10 @@ const inittialState = {
   fromLocIdx: {},
   formDateStockMissing: {},
   qty: 0,
+  listItems: [],
+  loading: false,
+  dataItems: [],
+  auditItems: []
 };
 
 const itemReducer = (state = inittialState, action) => {
@@ -65,6 +69,26 @@ const itemReducer = (state = inittialState, action) => {
         ...state,
         formDateStockMissing: action.value,
       };
+    case ActionType.SET_LIST_ITEMS:
+      return {
+        ...state,
+        listItems: action.value,
+      };
+    case ActionType.SET_LOADING:
+      return {
+        ...state,
+        loading: action.value,
+      };
+    case ActionType.SET_DATA_ITEMS:
+      return {
+        ...state,
+        dataItems: action.value,
+      };
+    case ActionType.SET_AUDIT_ITEM:
+        return {
+          ...state,
+          auditItems: action.value,
+        };
     default:
       return { ...state };
   }

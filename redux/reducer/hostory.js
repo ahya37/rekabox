@@ -2,7 +2,7 @@ const initialState = {
   listHistories: [],
   dataReport: [],
   useFormLisHistory: {},
-  detailHistory: null,
+  detailHistory: [],
 };
 
 const HistoryReducer = (state = initialState, action) => {

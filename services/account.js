@@ -24,7 +24,7 @@ export async function getListAccountOwnerOnly(token, branch) {
   });
 }
 
-export async function getListAccountOwnerCustomer(token, branch) {
+export async function getListAccountCustomerOnly(token, branch) {
   let params = `?token=${token}&branch=${branch}`;
   const url = `${ROOT_API}/api/account/list/onlycustomer${params}`;
 
@@ -37,6 +37,28 @@ export async function getListAccountOwnerCustomer(token, branch) {
 
 export async function setSaveAccount(data, token) {
   const url = `${ROOT_API}/api/account/store`;
+
+  return callAPI({
+    url,
+    method: "POST",
+    data,
+    accessToken: token,
+  });
+}
+
+export async function setUpdateAccount(data, token) {
+  const url = `${ROOT_API}/api/account/update`;
+
+  return callAPI({
+    url,
+    method: "POST",
+    data,
+    accessToken: token,
+  });
+}
+
+export async function setDeleteAccount(data, token) {
+  const url = `${ROOT_API}/api/account/delete`;
 
   return callAPI({
     url,

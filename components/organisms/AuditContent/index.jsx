@@ -1,19 +1,24 @@
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
-import { Button, Col, Row } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { Col, Row } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { setSelectItemLocation } from "redux/action/item";
 import {
-  BarcodeScanner,
   FormOptionItemLocation,
   StockFormItem,
   StockOutForm
 } from "../../molecules";
 
-export default function AuditContent({ branch, item, brlocIdx }) {
+export default function AuditContent({item}) {
+  const {fromLocIdx} = useSelector((state) => state.itemReducer);
   const [inStock, setInStock] = useState("");
+  const [brMode, setBrMode] = useState("");
+
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const branch = Cookies.get("branch");
+    setBrMode(branch.br_mode);
     setInStock("audit");
     dispatch(setSelectItemLocation([]))
   }, []);
@@ -26,11 +31,7 @@ export default function AuditContent({ branch, item, brlocIdx }) {
             <Col md={8}><h4 className="text-primary">Audit</h4></Col>
             <Col md={4}></Col>
             <Col md={6} className="p-2 mb-2">
-              {branch === 'Lokasi' ? (
-                <FormOptionItemLocation placeholderText="Pilih Lokasi" />
-              ) : (
-                ""
-              )}
+              <FormOptionItemLocation placeholderText="Pilih Lokasi" />
             </Col>
           </Row>
           <Row>
@@ -38,14 +39,15 @@ export default function AuditContent({ branch, item, brlocIdx }) {
               <label htmlFor="validationDefault04">
                 <h5>Stok Tersimpan</h5>
               </label>
-              <StockOutForm item={item} brMode={branch} />
+              <StockOutForm item={item} brMode={brMode} />
             </Col>
             <StockFormItem
               instock={inStock}
               title="Stok Saat Ini"
               countDesc="Stok Terkoreksi"
-              brlocIdx={brlocIdx}
-              brMode={branch}
+              account={""}
+              brlocIdx={fromLocIdx.locIdx}
+              brMode={brMode}
             />
           </Row>
         </div>

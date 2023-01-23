@@ -4,17 +4,21 @@ import Link from "next/link";
 import React, { Fragment, useCallback, useState } from "react";
 import { Button, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { setDetailHistory } from "redux/action/history";
 import { getDetailHistoryByLocation } from "../../../services/item";
 
 export default function DetailItemHistory() {
   const [isLoading, setIsLoading] = useState(false);
 
-  const { historyByLocation, detailHistoryByLocation } = useSelector(
+  const { historyByLocation } = useSelector(
     (state) => state.itemReducer
   );
 
+  const { detailHistory } = useSelector(
+    (state) => state.HistoryReducer
+  );
+
   const count = historyByLocation.count;
-  const histories = detailHistoryByLocation;
 
   const dispatch = useDispatch();
 
@@ -35,10 +39,7 @@ export default function DetailItemHistory() {
       token
     );
     setIsLoading(false);
-    dispatch({
-      type: "SET_DETAIL_HISTORY",
-      value: response?.data.data.histories,
-    });
+    dispatch(setDetailHistory(response?.data.data.histories))
   }, []);
 
   function IconStock(props) {
@@ -128,28 +129,28 @@ export default function DetailItemHistory() {
               </div>
             </div>
 
-            {histories.map((history) => (
-              <Fragment key={history.in_idx}>
+            {detailHistory.map((list) => (
+              <Fragment key={list.in_idx}>
                 <div className="col-md-8">
                   <div className="iq-info-box d-flex align-items-center p-3">
                     <div className="info-image mr-3">
-                      <IconStock status={history.in_status} />
+                      <IconStock status={list.in_status} />
                     </div>
                     <div className="info-text">
-                      <h6>{history.in_status}</h6>
-                      <h6>{history.in_create}</h6>
-                      <h6>{history.user_fullname}</h6>
+                      <h6>{list.in_status}</h6>
+                      <h6>{list.in_create}</h6>
+                      <h6>{list.user_fullname}</h6>
                     </div>
                   </div>
                 </div>
                 <div className="col-md-4">
                   <div className="iq-info-box d-flex align-items-center p-3">
                     <div className="info-text">
-                      <h6>{history.in_count}</h6>
+                      <h6>{list.in_count}</h6>
                       <span>
-                        {history.in_count_first}
+                        {list.in_count_first}
                         <i className="fa fa-arrow-right"></i>
-                        {history.in_count_last}
+                        {list.in_count_last}
                       </span>
                     </div>
                   </div>

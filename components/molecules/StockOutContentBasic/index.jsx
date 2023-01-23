@@ -1,52 +1,82 @@
+import { ModalFormAccount } from "components";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Select, { components } from "react-select";
+import { setListAccount, setShowFormAccount } from "redux/action/account";
 import { setShowItems } from "redux/action/item";
-import { getListAccountOwnerCustomer } from "services/account";
+import { getListAccountCustomerOnly } from "services/account";
+import { getListLocationItem } from "services/locationitem";
 import {
-    StockFormItem,
-    StockOutForm
+  StockFormItem,
+  StockOutForm
 } from "../../molecules";
 
-export default function StockOutContentBasic() {
-  const { selectItemLocation } = useSelector((state) => state.itemReducer);
-  const items = selectItemLocation;
-  
+export default function StockOutContentBasic(props) {
+  const { items } = props;
   const [inStock, setInStock] = useState("");
   const [brMode, setBrMode] = useState("");
-  const [account, setAccount] = useState([]);
-  const [show, setShow] = useState(false);
+  const [qword, setQword] = useState("");
+  const [filterData, setFilterData] = useState(items);
+  const [selectAccount, setSelectAccount] = useState("");
+  const [brlocIdx, setBrlocIdx] = useState("");
 
   const router = useRouter();
-
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
   const dispatch = useDispatch();
 
+  const { listAccount } = useSelector((state) => state.accountReducer);
+
+  const handleShow = () => {
+    dispatch(setShowFormAccount(true));
+  };
+
+  const handleFilter = (event) => {
+    const searchWord = event.target.value;
+
+    setQword(searchWord);
+    const newFilter = items.filter((value) => {
+      return value.it_name.toLowerCase().includes(searchWord.toLowerCase());
+    });
+    if (searchWord === "") {
+      setFilterData(items);
+    } else {
+      setFilterData(newFilter);
+    }
+  };
+
+
   const getListAccountAPI = useCallback(async (token, branch) => {
-    const response = await getListAccountOwnerCustomer(token, branch);
-    setAccount(response?.data.data.accounts);
+    const response = await getListAccountCustomerOnly(token, branch);
+    dispatch(setListAccount(response?.data.data.accounts))
+  });
+
+  const getLocationAPI = useCallback(async (token, branch) => {
+    const response = await getListLocationItem(token, branch);
+    setBrlocIdx(response?.data.data.location[0].loc_idx)
   });
 
   useEffect(() => {
     const token = Cookies.get("token");
     const branch = Cookies.get("branch");
+    
+    setInStock("out");
     setBrMode(branch.br_mode);
     getListAccountAPI(token, branch)
-    setInStock("out");
+    getLocationAPI(token, branch);
     dispatch(setShowItems(false));
   }, []);
 
 
-  const optionsAccount = account.map((d) => ({
-    value: d.ac_idx,
-    label: d.ac_name,
-  }));
+  const optionsAccount = [{}];
+  if (listAccount.length !== 0 ) {
+    optionsAccount = listAccount.map((d) => ({
+      value: d.ac_idx,
+      label: d.ac_name,
+    }));
+    
+  }
 
   const MenuList = (props) => {
     const {
@@ -89,9 +119,9 @@ export default function StockOutContentBasic() {
                 Tambah Transaksi Yang Hilang
               </Button>
             </Col>
-            <Col md={3} className="p-2 mb-2">
+            <Col md={3} className="p-3 mb-2">
 
-            <Select
+              <Select
                 components={{
                   MenuList,
                   MenuListFooter: (
@@ -104,7 +134,7 @@ export default function StockOutContentBasic() {
                 onChange={handleChangeAccount}
                 instanceId
               />
-              
+
             </Col>
             <Col md={3}></Col>
             <Col md={6}>
@@ -114,18 +144,29 @@ export default function StockOutContentBasic() {
             </Col>
           </Row>
           <Row>
-            <Col xs={12} md={6} className="mb-4 mt-4">
-              <label htmlFor="validationDefault04">
-                <h5>Stok Tersimpan</h5>
-              </label>
-              <StockOutForm item={items} brMode={brMode} />
+            <Col xs={12} md={6} className="mb-4 mt-2">
+              <input
+                type="text"
+                className="form-control mb-2"
+                placeholder="Cari nama item "
+                value={qword}
+                onChange={handleFilter}
+
+              />
+              <StockOutForm
+                item={filterData} 
+                brMode={brMode} />
             </Col>
             <StockFormItem
               instock={inStock}
               title="Stok Keluar"
               countDesc="Stok Keluar"
+              account={selectAccount ?? ""}
+              brlocIdx={brlocIdx}
+              brMode="Basic"
             />
           </Row>
+          <ModalFormAccount type="Customer" />
         </div>
       </div>
     </div>

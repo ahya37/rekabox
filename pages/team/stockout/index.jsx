@@ -3,8 +3,10 @@ import { ClearRedux } from "../../../services/redux";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { getChekAuth } from "../../../services/auth";
+import { getItemByLocation } from "services/item";
 
-export default function StokOut() {
+export default function StokOut(props) {
+  const { resultItems } = props;
   const [content, setContent] = useState("");
 
   const dispatch = useDispatch();
@@ -14,12 +16,12 @@ export default function StokOut() {
 
     if (localData.br_mode === 'Basic') {
       setContent(
-        <StockOutContentBasic />
+        <StockOutContentBasic items={resultItems} />
       )
       
     }else{
       setContent(
-        <StockOutContent />
+        <StockOutContent/>
        
       )
     }
@@ -39,8 +41,16 @@ export default function StokOut() {
 
 export async function getServerSideProps({ req }) {
   const { token } = req.cookies;
+  const { branch } = req.cookies;
 
   const auth = await getChekAuth(token);
+
+  const data = {
+    token: token,
+  }
+
+  const resultItems = await getItemByLocation('all', data, token, branch);
+
 
   if (auth.error || !token) {
     return {
@@ -52,6 +62,8 @@ export async function getServerSideProps({ req }) {
   }
 
   return {
-    props: {},
+    props: {
+      resultItems: resultItems?.data.data.item
+    },
   };
 }
