@@ -3,11 +3,10 @@ export default function MoreFeature() {
     <section id="more-features" className="section-bg">
       <div className="container">
         <div className="section-header">
-          <h3 className="section-title">More Features</h3>
+          <h3 className="section-title">Fitur</h3>
           <span className="section-divider"></span>
           <p className="section-description">
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            accusantium doloremque
+            Dengan fitur yang dihadirkan dalam aplikasi
           </p>
         </div>
 
@@ -18,12 +17,10 @@ export default function MoreFeature() {
                 <i className="ion-ios-stopwatch-outline"></i>
               </div>
               <h4 className="title">
-                <a href="">Lorem Ipsum</a>
+                <a href="">Mengelola Item</a>
               </h4>
               <p className="description">
-                Voluptatum deleniti atque corrupti quos dolores et quas
-                molestias excepturi sint occaecati cupiditate non provident
-                etiro rabeta lingo.
+                Mengelola item dengan mudah berdasarkan lokasi maupun dalam satu cabang.
               </p>
             </div>
           </div>
@@ -34,11 +31,10 @@ export default function MoreFeature() {
                 <i className="ion-ios-bookmarks-outline"></i>
               </div>
               <h4 className="title">
-                <a href="">Dolor Sitema</a>
+                <a href="">Mengelola Stok Masuk & Keluar</a>
               </h4>
               <p className="description">
-                Minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                aliquip ex ea commodo consequat tarad limino ata nodera clas.
+                Mengelola stok masuk dan keluar item, dan bisa melakukan audit stok sebenarnya didalam inventori.
               </p>
             </div>
           </div>
@@ -46,15 +42,13 @@ export default function MoreFeature() {
           <div className="col-lg-6">
             <div className="box wow fadeInLeft">
               <div className="icon">
-                <i className="ion-ios-heart-outline"></i>
+                <i className="ion-ios-location-outline"></i>
               </div>
               <h4 className="title">
-                <a href="">Sed ut perspiciatis</a>
+                <a href="">Mengelola Item Berbasis Lokasi & Dasar</a>
               </h4>
               <p className="description">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur trinige zareta lobur
-                trade.
+                Mengelola item berdasarkan banyak lokasi maupun satu lokasi saja.
               </p>
             </div>
           </div>
@@ -65,12 +59,10 @@ export default function MoreFeature() {
                 <i className="ion-ios-analytics-outline"></i>
               </div>
               <h4 className="title">
-                <a href="">Magni Dolores</a>
+                <a href="">Mengelola Item Penjualan & Pembelian</a>
               </h4>
               <p className="description">
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                qui officia deserunt mollit anim id est laborum rideta zanox
-                satirente madera
+                Mengelola penjualan dan pembelian stok item dalam inventori.
               </p>
             </div>
           </div>
