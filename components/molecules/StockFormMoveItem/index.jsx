@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Button, Col, Row, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { setDetailItem, setSelectItemLocation } from "redux/action/item";
 import { setSaveMoveItem } from "../../../services/item";
 
 export default function StockFormMoveItem(props) {
@@ -66,8 +67,8 @@ export default function StockFormMoveItem(props) {
     if (response.error) {
       toast.error(response.message);
     } else {
-      dispatch({ type: "SET_DETAIL_ITEM", value: {} });
-      dispatch({ type: "SET_ITEM_BY_LOCATION", value: [] });
+      dispatch(setDetailItem({}))
+      dispatch(setSelectItemLocation([]))
       setCount(null);
       setIdx("");
       setDesc("");
@@ -77,8 +78,8 @@ export default function StockFormMoveItem(props) {
   };
 
   const onCancel = () => {
-    dispatch({ type: "SET_DETAIL_ITEM", value: {} });
-    dispatch({ type: "SET_ITEM_BY_LOCATION", value: [] });
+    dispatch(setDetailItem({}))
+    dispatch(setSelectItemLocation([]))
     setCount(null);
     setIdx("");
     setDesc("");

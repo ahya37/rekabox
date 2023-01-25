@@ -13,6 +13,7 @@ import { getEditItem, setSaveCopyItem } from "../../../../services/item";
 import { getListLocationItem } from "../../../../services/locationitem";
 import styles from "../../../../styles/Fileupload.module.css";
 import { generate } from "../../../../utils/randomstring";
+import { setDetailItem, setSelectItemLocation } from "redux/action/item";
 
 export default function CopyItem(props) {
   const { itemDetail } = props;
@@ -48,22 +49,23 @@ export default function CopyItem(props) {
     });
   };
 
-  const getListCategoryAPI = useCallback(async (token) => {
-    const response = await getListCategory(token);
+  const getListCategoryAPI = useCallback(async (token, branch) => {
+    const response = await getListCategory(token, branch);
     const dataCategory = response.data.data.category;
     setCategory(dataCategory);
   }, []);
 
-  const getListLocationAPI = useCallback(async (token) => {
-    const response = await getListLocationItem(token);
+  const getListLocationAPI = useCallback(async (token, branch) => {
+    const response = await getListLocationItem(token, branch);
     const dataLocation = response.data.data.location;
     setLocation(dataLocation);
   }, []);
 
   useEffect(() => {
-    const token = Cookies.get("token");
-    getListCategoryAPI(token);
-    getListLocationAPI(token);
+    const token  = Cookies.get("token");
+    const branch = Cookies.get("branch");
+    getListCategoryAPI(token, branch);
+    getListLocationAPI(token, branch);
     setItem(itemDetail);
   }, []);
 
@@ -79,6 +81,7 @@ export default function CopyItem(props) {
 
   const onSubmit = async () => {
     const token = Cookies.get("token");
+    const branch = Cookies.get("branch");
     const selectedCategory =
       selectCategory === null ? "" : selectCategory.value;
     const selectedLocation =
@@ -94,6 +97,7 @@ export default function CopyItem(props) {
       image,
       selectedLocation,
       token,
+      branch
     };
 
     const data = new FormData();
@@ -101,21 +105,22 @@ export default function CopyItem(props) {
     data.append("it_barcode", useForm.it_barcode);
     data.append("it_catidx", useForm.it_catidx);
     data.append("it_name", useForm.it_name);
-    data.append("ic_count", useForm.count);
+    data.append("ic_count", parseFloat(useForm.count));
     data.append("it_image", useForm.image);
     data.append("loc_idx", useForm.selectedLocation);
     data.append("token", useForm.token);
+    data.append("it_br_idx", useForm.branch);
 
     setIsLoading(true);
     const response = await setSaveCopyItem(data, token);
+    console.log('response: ', response);
     setIsLoading(false);
     if (response.error) {
       toast.error(response.message);
     } else {
-      const userProfile = response.data;
-      toast.success("Item telah disalin");
-      dispatch({ type: "SET_ITEM_BY_LOCATION", value: [] });
-      dispatch({ type: "SET_DETAIL_ITEM", value: [] });
+      toast.success(response?.data.data.message);
+      dispatch(setSelectItemLocation([]));
+      dispatch(setDetailItem([]));
       router.push("/team/item");
     }
   };

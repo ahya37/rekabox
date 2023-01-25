@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { setDetailItem, setSelectItemLocation } from "redux/action/item";
 import Swal from "sweetalert2";
 import { getHistoryByLocation, setDeleteItem } from "../../../services/item";
 import Menu from "./Menu";
@@ -71,8 +72,8 @@ export default function DetailItemInfo(props) {
           Swal.fire(response.message, "", "error");
         } else {
           Swal.fire("Terhapus", "", "success");
-          dispatch({ type: "SET_ITEM_BY_LOCATION", value: [] });
-          dispatch({ type: "SET_DETAIL_ITEM", value: {} });
+          dispatch(setSelectItemLocation([]))
+          dispatch(setDetailItem({}))
           router.push("/team/item");
         }
       }

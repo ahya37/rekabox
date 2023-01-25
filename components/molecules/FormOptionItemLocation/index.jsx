@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Select from "react-select";
-import { setFromLocIdx } from "redux/action/item";
+import { setDetailItem, setFromLocIdx, setSelectItemLocation, setShowItems } from "redux/action/item";
 import { getItemByLocation } from "../../../services/item";
 import {
   getListLocationItem,
@@ -37,10 +37,10 @@ export default function FormOptionItemLocation(props) {
 
   const handleChange = async (e) => {
     if (e === null) {
-      dispatch({ type: "SET_ITEM_BY_LOCATION", value: [] });
-      dispatch({ type: "SET_DETAIL_ITEM", value: {} });
-      dispatch({ type: "SET_SHOW_ITEMS", value: false });
-      dispatch({ type: "SET_FROM_LOCIDX", value: {} });
+      dispatch(setSelectItemLocation([]));
+      dispatch(setDetailItem({}));
+      dispatch(setShowItems(false));
+      dispatch(setFromLocIdx({}));
     } else {
       const token   = Cookies.get("token");
       const branch  =   Cookies.get("branch");
@@ -54,8 +54,8 @@ export default function FormOptionItemLocation(props) {
 
       const response = await getItemByLocation(locIdx, data, token,branch);
       const dataItem = response.data.data.item;
-      dispatch({ type: "SET_ITEM_BY_LOCATION", value: dataItem });
-      dispatch({ type: "SET_DETAIL_ITEM", value: {} });
+      dispatch(setSelectItemLocation(dataItem));
+      dispatch(setDetailItem({}));
       dispatch(setFromLocIdx({locIdx}));
     }
   };
