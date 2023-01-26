@@ -1,10 +1,10 @@
 import Cookies from "js-cookie";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { setDetailItem, setSelectItemLocation } from "redux/action/item";
+import { setDetailHistoryByLocation, setDetailItem, setHistoryByLocation, setSelectItemLocation } from "redux/action/item";
 import Swal from "sweetalert2";
 import { getHistoryByLocation, setDeleteItem } from "../../../services/item";
 import Menu from "./Menu";
@@ -13,9 +13,17 @@ export default function DetailItemInfo(props) {
   const { item, idx, location } = props;
   const IMG = process.env.NEXT_PUBLIC_IMG;
   const [isLoading, setIsLoading] = useState(false);
+  const [brMode, setBrMode]  = useState("");
 
   const router = useRouter();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const dataBranch = JSON.parse(localStorage.getItem("branch"));
+    setBrMode(dataBranch.br_mode);
+  },[]);
+
+  console.log(brMode)
 
   const history = async (value) => {
     const token = Cookies.get("token");
@@ -39,8 +47,8 @@ export default function DetailItemInfo(props) {
     );
     
     setIsLoading(true);
-    dispatch({ type: "SET_HISTORY_BY_LOCATION", value: response?.data.data });
-    dispatch({ type: "SET_DETAIL_HISTORY", value: [] });
+    dispatch(setHistoryByLocation(response?.data.data))
+    dispatch(setDetailHistoryByLocation([]))
   };
 
   const onDelete = (value) => {
@@ -91,7 +99,13 @@ export default function DetailItemInfo(props) {
           <div className="col-md-6 text-right">
             <div className="iq-header-title">
               <Menu title="Edit" href={`/team/item/edit/${idx}`} />
-              <Menu title="Salin" href={`/team/item/copy/${idx}`} />
+              {
+                brMode === "Lokasi" ? (
+                  <Menu title="Salin" href={`/team/item/copy/${idx}`} />
+                ) : (
+                  <Menu title="Salin" href={`/team/item/copybasic/${idx}`} />
+                )
+              }
               <Button
                 variant="default"
                 className="border ml-2"

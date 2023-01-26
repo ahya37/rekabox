@@ -18,9 +18,8 @@ import { setDetailItem, setSelectItemLocation } from "redux/action/item";
 export default function CopyItem(props) {
   const { itemDetail } = props;
   const [category, setCategory] = useState([]);
-  const [location, setLocation] = useState([]);
+  const [location, setLocation] = useState("");
   const [count, setCount] = useState(1);
-  const [selectLocation, setSelectLocation] = useState(null);
   const [imagePreview, setImagePreview] = useState("/");
   const [selectCategory, setSelectCategory] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -55,13 +54,15 @@ export default function CopyItem(props) {
     setCategory(dataCategory);
   }, []);
 
-  const getListLocationAPI = useCallback(async (token, branch) => {
+  const getListLocationAPI = useCallback(async (token, branch, brMode) => {
     const results = await getListLocationItem(token, branch);
-    const dataLocation = results?.data.data.location;
+    const dataLocation = results?.data.data.location[0].loc_idx;
     setLocation(dataLocation);
   }, []);
 
+
   useEffect(() => {
+
     const token = Cookies.get("token");
     const branch = Cookies.get("branch");
     getListCategoryAPI(token, branch);
@@ -74,18 +75,10 @@ export default function CopyItem(props) {
     label: d.cat_name,
   }));
 
-  const optionLocations = location.map((d) => ({
-    value: d.loc_idx,
-    label: d.loc_name,
-  }));
-
   const onSubmit = async () => {
     const token = Cookies.get("token");
     const branch = Cookies.get("branch");
-    const selectedCategory =
-      selectCategory === null ? "" : selectCategory.value;
-    const selectedLocation =
-      selectLocation === null ? "" : selectLocation.value;
+    const selectedCategory = selectCategory === null ? "" : selectCategory.value;
 
     const useForm = {
       it_idx: item.it_idx,
@@ -95,7 +88,7 @@ export default function CopyItem(props) {
       it_desc: item.it_desc,
       count,
       image,
-      selectedLocation,
+      location,
       token,
       branch
     };
@@ -223,19 +216,6 @@ export default function CopyItem(props) {
                                   isClearable={true}
                                 />
                               </div>
-                            </div>
-                            <div className="form-group row">
-                              <label className="col-md-3 col-sm-3 col-form-label">
-                                <sup className={styles["text-required"]}>*</sup>
-                                Lokasi
-                              </label>
-                                <div className="col-md-7 col-sm-6">
-                                  <Select
-                                    options={optionLocations}
-                                    onChange={setSelectLocation.bind(this)}
-                                    isClearable={true}
-                                  />
-                                </div>
                             </div>
                             <div className="form-group row">
                               <label className="col-md-3 col-sm-3 col-form-label">
