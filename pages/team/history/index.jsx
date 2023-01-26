@@ -35,8 +35,9 @@ export default function History(props) {
 
 export async function getServerSideProps({ req }) {
   const { token } = req.cookies;
+  const { branch } = req.cookies;
 
-  const data = { token };
+  const data = { token, branch };
 
   const auth = await getChekAuth(token);
 

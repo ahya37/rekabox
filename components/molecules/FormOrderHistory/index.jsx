@@ -5,7 +5,7 @@ import { Button, Col, Row } from "react-bootstrap";
 import DateRangePicker from "react-bootstrap-daterangepicker";
 import { useDispatch } from "react-redux";
 import Select from "react-select";
-import { setUseFormListHistories } from "../../../redux/action/history";
+import { setDataReport, setDetailHistory, setListHistories, setUseFormListHistories } from "../../../redux/action/history";
 import { getListHistories } from "../../../services/history";
 import { getListItem } from "../../../services/item";
 import { getReportInventory } from "../../../services/report";
@@ -115,6 +115,7 @@ export default function FormOrderHistory(props) {
   // [CLOSE OPTION DATERANGE]
 
   const onSubmit = async () => {
+    dispatch(setDetailHistory([]))
     const selectedTransaction =
       selectTransaction === null ? "" : selectTransaction.value;
 
@@ -150,18 +151,9 @@ export default function FormOrderHistory(props) {
 
     const response = await getListHistories(data, token);
     const responseReport = await getReportInventory(data, token);
-    dispatch({
-      type: "SET_LIST_HISTORIES",
-      value: response?.data.data.histories,
-    });
-    dispatch({
-      type: "SET_DETAIL_HISTORY",
-      value: null,
-    });
-    dispatch({
-      type: "SET_DATA_REPORT",
-      value: responseReport?.data.data.report,
-    });
+
+    dispatch(setListHistories(response?.data.data.histories))
+    dispatch(setDataReport(responseReport?.data.data.report))
   };
 
   const clearDate = (event, picker) => {
@@ -192,7 +184,7 @@ export default function FormOrderHistory(props) {
           instanceId
         />
       </Col>
-      <Col xs={4} md={2} sm={4} className="mt-2">
+      <Col xs={4} md={brMode === "Lokasi" ? 2 : 3} sm={4} className="mt-2">
         <Select
           placeholder={"Item"}
           onChange={setSelectItem.bind(this)}
@@ -214,7 +206,7 @@ export default function FormOrderHistory(props) {
         ) : (
           ""
         )}
-      <Col xs={4} md={2} sm={4} className="mt-2">
+      <Col xs={4} md={brMode === "Lokasi" ? 2 : 3} sm={4} className="mt-2">
         <Select
           options={optionUser}
           isClearable={true}

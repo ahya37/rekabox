@@ -20,8 +20,6 @@ export default function Audit({ dataItems }) {
     setBrMode(dataLocal.br_mode);
   }, []);
 
-  console.log('data items:', dataItems);
-
   return (
     <div className="wrapper">
       <Sidebar activeMenu="audit" />

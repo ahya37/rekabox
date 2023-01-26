@@ -193,7 +193,6 @@ export default function AccountContent() {
   }
 
   const onUpdate = async () => {
-    console.log(editAccount);
     if (!editAccount.ac_name) {
       toast.error("Nama akun tidak boleh kosong!");
     } else {

@@ -3,9 +3,6 @@ import { Col, Row } from "react-bootstrap";
 
 export default function LinkedItem({data}) {
 const IMG = process.env.NEXT_PUBLIC_IMG;
-
-console.log('data: ', data);
-
   return (
       <Row>
         <Col md={12} className="mt-4"></Col>

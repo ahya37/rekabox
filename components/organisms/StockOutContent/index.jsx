@@ -140,16 +140,6 @@ export default function StockOutContent() {
         <div className="card-body">
           <Row className="border-bottom">
             <Col md={8}><h4 className="text-danger">Stok Keluar</h4></Col>
-            <Col md={4}>
-              <Button
-                variant="default border"
-                className="float-right"
-                onClick={() => router.push("/team/stockout/sm")}
-              >
-                <i className="fa fa-plus"></i>
-                Tambah Transaksi Yang Hilang
-              </Button>
-            </Col>
             <Col md={12}>
             </Col>
             <Col md={12}>

@@ -317,7 +317,7 @@ export default function FormPurchaseAndSales({ items, type }) {
                   <div className="iq-header-title">
                     <span>Pembelian & Penjualan</span>
                     <h4 className="card-title text-primary">
-                      Pesanan Penjualan Baru
+                      Pesanan Pembelian Baru
                     </h4>
                   </div>
                 </div>

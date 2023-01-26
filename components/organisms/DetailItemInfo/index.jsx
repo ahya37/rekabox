@@ -22,9 +22,6 @@ export default function DetailItemInfo(props) {
     const dataBranch = JSON.parse(localStorage.getItem("branch"));
     setBrMode(dataBranch.br_mode);
   },[]);
-
-  console.log(brMode)
-
   const history = async (value) => {
     const token = Cookies.get("token");
     const lc_idx = value.lc_idx;

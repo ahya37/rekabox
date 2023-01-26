@@ -19,14 +19,13 @@ export default function HistoryContent() {
   const IMG = process.env.NEXT_PUBLIC_IMG;
   const dispatch = useDispatch();
 
-  const branch = Cookies.get("branch");
-
   const historyItemDetail = async (value) => {
     const token = Cookies.get("token");
     const useForm = {
       token,
       inIdx: value,
     };
+
 
     const data = new FormData();
     data.append("token", useForm.token);
@@ -37,10 +36,7 @@ export default function HistoryContent() {
     if (response?.error) {
       toast.error(response?.message);
     } else {
-      dispatch({
-        type: "SET_DETAIL_HISTORY",
-        value: response?.data.data.detailHistory,
-      });
+      dispatch(setDetailHistory(response?.data.data.detailHistory))
     }
   };
 
@@ -49,7 +45,6 @@ export default function HistoryContent() {
     const dataLocal = JSON.parse(localStorage.getItem('branch'));
     setBrMode(dataLocal.br_mode);
   }, []);
-
 
   function ViewCountQty() {
     if (detailHistory.in_status === "Stok Keluar") {
@@ -117,7 +112,7 @@ export default function HistoryContent() {
                     />
                   </div>
                 </div>
-              ) : detailHistory === null ? (
+              ) : detailHistory === undefined || Object.keys(detailHistory).length === 0 ? (
                 ""
               ) : (
                 <div className="iq-card">
