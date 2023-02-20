@@ -21,3 +21,14 @@ export async function setSaveUserMemberInfo(data) {
     data,
   });
 }
+
+export async function setSaveBusiness(data, token) {
+  const url = `${ROOT_API}/api/business/store`;
+
+  return callAPI({
+    url,
+    method: "POST",
+    data,
+    accessToken: token,
+  });
+}

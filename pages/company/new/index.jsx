@@ -13,7 +13,7 @@ export default function CreateNewCompany() {
   const [cities, setCities] = useState([]);
   const [selectCity, setSelectCity] = useState(null);
   const [address, setAddress] = useState("");
-  const [telp, setTelp] = useState("");
+  const [telp, setTelp] = useState(""); 
   const [fax, setFax] = useState("");
   const [email, setEmail] = useState("");
   const [website, setWebsite] = useState("");
