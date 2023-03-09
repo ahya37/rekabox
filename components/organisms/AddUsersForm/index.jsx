@@ -19,6 +19,7 @@ export default function AddUsersForm() {
   const [imagePreview, setImagePreview] = useState(null);
   const [selectLevel, setSelectLevel] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setError] = useState([]);
 
   const router = useRouter();
 
@@ -28,7 +29,7 @@ export default function AddUsersForm() {
   ];
 
   const onSubmit = async () => {
-    const selectedLevel = selectLevel === null ? null : selectLevel.value;
+    const selectedLevel = selectLevel === null ? '' : selectLevel.value;
 
     const token = Cookies.get("token");
     const branch = Cookies.get("branch");
@@ -43,6 +44,7 @@ export default function AddUsersForm() {
       selectedLevel,
       branch
     };
+
 
     const data = new FormData();
     data.append("token", formData.token);
@@ -60,11 +62,14 @@ export default function AddUsersForm() {
     setIsLoading(false);
     if (result.error) {
       toast.error(result.message);
+      result.message.user_name && toast.error('Username tidak tersedia');
+      setError(result.message)
     } else {
       toast.success("Pengguna Berhasil Disimpan");
       router.push("/team/users");
     }
   };
+
 
   const ActionButton = () => {
     return (
@@ -92,7 +97,7 @@ export default function AddUsersForm() {
           <div className="input-group">
             <input
               type="text"
-              className="form-control"
+              className={`form-control ${errors.user_fullname && "is-invalid"}`}
               value={userFullname}
               onChange={(event) => setUserFullname(event.target.value)}
               required
@@ -107,7 +112,7 @@ export default function AddUsersForm() {
           <div className="input-group">
             <input
               type="text"
-              className="form-control"
+              className={`form-control ${errors.user_name && "is-invalid"}`}
               value={userName}
               onChange={(event) => setUserName(event.target.value)}
               required
@@ -122,7 +127,7 @@ export default function AddUsersForm() {
           <div className="input-group">
             <input
               type="text"
-              className="form-control"
+              className={`form-control ${errors.upass && "is-invalid"}`}
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               required
@@ -154,14 +159,24 @@ export default function AddUsersForm() {
           </div>
         </div>
         <div className="col-md-6 mb-3">
-          <label htmlFor="validationDefaultUsername">Level</label>
-          <div className="input-group">
+          <label htmlFor="validationDefaultUsername">Level
+          <sup className={styles["text-required"]}>*</sup>
+          </label>
+          <div className="row input-group">
             <Select
               options={optionLevel}
               onChange={setSelectLevel.bind(this)}
               isClearable={true}
               instanceId
               className="col-md-12"
+              styles={{
+                  control: (baseStyles, state) => ({
+                    ...baseStyles,
+                    borderColor: errors.level_type ? "red" : "grey",
+                    width:539,
+                    lineHeight:2
+                  }),
+                }}
             />
           </div>
         </div>
