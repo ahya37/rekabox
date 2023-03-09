@@ -39,15 +39,16 @@ export default function EditItem(props) {
     });
   };
 
-  const getListCategoryAPI = useCallback(async (token) => {
-    const response = await getListCategory(token);
+  const getListCategoryAPI = useCallback(async (token, branch) => {
+    const response = await getListCategory(token, branch);
     const dataCategory = response.data.data.category;
     setCategory(dataCategory);
   }, []);
 
   useEffect(() => {
     const token = Cookies.get("token");
-    getListCategoryAPI(token);
+    const branch = Cookies.get("branch");
+    getListCategoryAPI(token, branch);
     setItem(itemDetail);
   }, []);
 
@@ -71,25 +72,27 @@ export default function EditItem(props) {
       token,
     };
 
-    const data = new FormData();
-    data.append("it_idx", useForm.it_idx);
-    data.append("it_name", useForm.it_name);
-    data.append("it_desc", useForm.it_desc);
-    data.append("it_barcode", useForm.it_barcode);
-    data.append("it_catidx", useForm.it_catidx);
-    data.append("it_image", useForm.it_image);
-    data.append("token", useForm.token);
-
-    // [PROSES SIMPAN UPDATE ]
-    setIsLoading(true);
-    const response = await setUpdateItem(data, token);
-    setIsLoading(false);
-    if (response.error) {
-      toast.error(response.message);
+    if (!useForm.it_name || !useForm.it_barcode) {
+      toast.error("Lengkapi data yang wajib diisi!");
     } else {
-      const userProfile = response.data;
-      toast.success("Item telah diubah");
-      router.push(`/team/item/${item.it_idx}`);
+      const data = new FormData();
+      data.append("it_idx", useForm.it_idx);
+      data.append("it_name", useForm.it_name);
+      data.append("it_desc", useForm.it_desc);
+      data.append("it_barcode", useForm.it_barcode);
+      data.append("it_catidx", useForm.it_catidx);
+      data.append("it_image", useForm.it_image);
+      data.append("token", useForm.token);
+
+      setIsLoading(true);
+      const response = await setUpdateItem(data, token);
+      setIsLoading(false);
+      if (response.error) {
+        toast.error(response.message);
+      } else {
+        toast.success("Item telah diubah");
+        router.push(`/team/item/${item.it_idx}`);
+      }
     }
   };
 
