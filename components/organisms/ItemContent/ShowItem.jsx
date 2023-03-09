@@ -2,8 +2,8 @@ import Cookies from "js-cookie";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { Col, Row, Spinner } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { setDetailItem, setLocationByItem } from "redux/action/item";
+import { useDispatch, useSelector } from "react-redux";
+import { setDetailItem, setHSelectedImage, setLocationByItem } from "redux/action/item";
 import { getListItem, getLocationByItem } from "../../../services/item";
 
 export default function ShowItem() {
@@ -12,6 +12,10 @@ export default function ShowItem() {
   const [filterData, setFilterData] = useState([]);
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { highlighSelectedImage } = useSelector(
+    (state) => state.itemReducer
+  );
 
   const dispatch = useDispatch();
 
@@ -33,6 +37,7 @@ export default function ShowItem() {
 
   const onSelectDetail = async (list) => {
     dispatch(setDetailItem(list));
+    dispatch(setHSelectedImage(list.it_idx))
     const it_idx = list.it_idx;
     const useForm = {
       token,
@@ -41,7 +46,6 @@ export default function ShowItem() {
     const data = new FormData();
     data.append("token", useForm.token);
     const location = await getLocationByItem(it_idx, data, token);
-    // PERBAIKI API DISINI
     dispatch(setLocationByItem(location?.data.data.lokasi));
   };
 
@@ -58,6 +62,7 @@ export default function ShowItem() {
       setFilterData(newFilter);
     }
   };
+
 
   return (
     <div className="col-md-6 border-top">
@@ -91,7 +96,7 @@ export default function ShowItem() {
             return (
               <Col md={12} onClick={() => onSelectDetail(value)} key={value.it_idx
               } style={{ cursor: "pointer" }}>
-                <div className="border-bottom">
+                <div className={`border-bottom ${highlighSelectedImage === value.it_idx ? 'bg-light' : ''} `}>
                   <div className="mt-2 ml-2">
                     <Row className="mr-1">
                       <Col md={2}>
@@ -100,14 +105,14 @@ export default function ShowItem() {
                             src={`${IMG}/${value.it_image}`}
                             width="50"
                             height="50"
-                            className="rounded-top rounded-bottom"
+                            className="rounded-top rounded-bottom mt-2"
                           />
                         ) : (
                           <Image
                             src="/icon/broken_image.svg"
                             width={50}
                             height={50}
-                            className="rounded-top rounded-bottom"
+                            className="rounded-top rounded-bottom "
                           />
                         )}
                       </Col>

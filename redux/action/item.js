@@ -70,3 +70,8 @@ export const setAuditItems = (value) => ({
   value
 })
 
+export const setHSelectedImage = (value) => ({
+  type: ActionType.SET_H_SELECTED_IMAGE,
+  value
+})
+

@@ -1,4 +1,7 @@
+import { setDetailItem, setHSelectedImage, setSelectItemLocation } from "redux/action/item";
+
 export const ClearRedux = () => (dispatch) => {
-  dispatch({ type: "SET_ITEM_BY_LOCATION", value: [] });
-  dispatch({ type: "SET_DETAIL_ITEM", value: {} });
+  dispatch(setSelectItemLocation([]));
+  dispatch(setDetailItem({}));
+  dispatch(setHSelectedImage(null));
 };

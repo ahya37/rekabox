@@ -39,7 +39,6 @@ export default function SignInForm() {
         const userProfile = response.data;
         localStorage.setItem("userProfile", JSON.stringify(userProfile));
         localStorage.setItem("branch", JSON.stringify(userProfile.data.branch));
-        console.log(userProfile.data)
 
         const token = userProfile.data.access_token;
         const branch = userProfile.data.branch.br_idx;

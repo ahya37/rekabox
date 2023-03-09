@@ -14,7 +14,8 @@ const inittialState = {
   listItems: [],
   loading: false,
   dataItems: [],
-  auditItems: []
+  auditItems: [],
+  highlighSelectedImage: null
 };
 
 const itemReducer = (state = inittialState, action) => {
@@ -88,6 +89,11 @@ const itemReducer = (state = inittialState, action) => {
         return {
           ...state,
           auditItems: action.value,
+        };
+    case ActionType.SET_H_SELECTED_IMAGE:
+        return {
+          ...state,
+          highlighSelectedImage: action.value,
         };
     default:
       return { ...state };

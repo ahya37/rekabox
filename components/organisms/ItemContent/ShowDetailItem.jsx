@@ -37,7 +37,7 @@ export default function ShowDetailItem(props) {
             <div onClick={() => onDetail(it_idx)} style={{ cursor: "pointer" }}>
               <div className="card">
                 <div className="card-body">
-                  <div className="row alert alert-secondary">
+                  <div className="row alert alert-light">
                     <div className="col-md-2">
                       {it_image !== "NULL" ? (
                         <img
