@@ -179,12 +179,8 @@ export default function FormBundle(props) {
       <div className="iq-card">
         <div className="card-body">
           <span>Pembelian & Penjualan</span>
-          <h4 className="card-title text-primary">
-            Tambah Bundel
-          </h4>
-          <span>
-            Silahkan pilih item untuk didaftarkan sebagai bundel.
-          </span>
+          <h4 className="card-title text-primary">Tambah Bundel</h4>
+          <span>Silahkan pilih item untuk didaftarkan sebagai bundel.</span>
           {createForm ? (
             <Fragment>
               <Row className="mt-4 border-bottom mb-3">
@@ -378,8 +374,7 @@ export default function FormBundle(props) {
               <Row>
                 <Col md={7}>
                   <label>
-                    Nama Bundel{" "}
-                    <sup className={styles["text-required"]}>*</sup>
+                    Nama Bundel <sup className={styles["text-required"]}>*</sup>
                   </label>
                   <input
                     type="text"
@@ -398,7 +393,6 @@ export default function FormBundle(props) {
                         value={barcode}
                         onChange={(event) => setBarcode(event.target.value)}
                       />
-
                     </Col>
                     <Col md={1} className="mt-4 align-items-center">
                       <div className="mt-4"></div>
@@ -414,7 +408,9 @@ export default function FormBundle(props) {
                         value={cost}
                         onChange={(event) => setCost(event.target.value)}
                       />
-
+                      <div className="mt-1 ml-1 text-primary">
+                        <Number value={cost} />
+                      </div>
                     </Col>
                     <Col md={12} className="mt-2">
                       <label>Harga</label>
@@ -425,15 +421,18 @@ export default function FormBundle(props) {
                         onChange={(event) => setPrice(event.target.value)}
                       />
 
+                      <div className="mt-1 ml-1 text-primary">
+                        <Number value={price} />
+                      </div>
                     </Col>
                     <Col md={12} className="mt-2">
-                    <label>Note</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={note}
-                      onChange={(event) => setNote(event.target.value)}
-                    />
+                      <label>Note</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={note}
+                        onChange={(event) => setNote(event.target.value)}
+                      />
                     </Col>
                   </Row>
                 </Col>

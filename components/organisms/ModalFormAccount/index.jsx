@@ -112,7 +112,7 @@ export default function ModalFormAccount({type}) {
 
                     <Modal show={showFormAccount} onHide={handleClose} animation={false} centered size="lg">
                         <Modal.Header>
-                            <Modal.Title>Tambah Akun</Modal.Title>
+                            <Modal.Title>Tambah {type}</Modal.Title>
                             <Button variant="default" onClick={handleClose}>
                                 <i className="fa fa-close"></i>
                             </Button>
@@ -126,7 +126,7 @@ export default function ModalFormAccount({type}) {
                                 <input
                                     type="text"
                                     className="form-control"
-                                    placeholder="Nama Akun"
+                                    placeholder={`Nama ${type}`}
                                     name="name"
                                     onChange={handleChange}
                                     onBlur={handleBlur}

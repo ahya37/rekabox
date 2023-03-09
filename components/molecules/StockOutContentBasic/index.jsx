@@ -94,7 +94,7 @@ export default function StockOutContentBasic(props) {
   const MenuListFooter = ({ onClick }) => {
     return (
       <center onClick={onClick} className="border-top text-primary" style={{ cursor: "pointer" }}>
-        <i className="fa fa-plus"></i> Tambah Akun
+        <i className="fa fa-plus"></i> Tambah Customer
       </center>
     )
   }
@@ -129,7 +129,7 @@ export default function StockOutContentBasic(props) {
                   )
                 }}
                 options={optionsAccount}
-                placeholder={"Akun"}
+                placeholder={"Customer"}
                 isClearable={true}
                 onChange={handleChangeAccount}
                 instanceId

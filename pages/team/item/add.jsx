@@ -1,8 +1,29 @@
 import { Fragment } from "react";
-import { AddItemForm, Navbar, Sidebar } from "../../../components";
+import { AddItemForm, AddItemFormBasic, Navbar, Sidebar } from "../../../components";
 import { getChekAuth } from "../../../services/auth";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { ClearRedux } from "services/redux";
 
 export default function AddItem() {
+  const [content, setContent] = useState("");
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(ClearRedux());
+    const localData  = JSON.parse(localStorage.getItem('branch'));
+
+    if (localData.br_mode === 'Basic') {
+      setContent(
+        <AddItemFormBasic />
+      )
+      
+    }else{
+      setContent(
+        <AddItemForm />
+      )
+    }
+  }, []);
   return (
     <Fragment>
       <div className="wrapper">
@@ -20,7 +41,7 @@ export default function AddItem() {
                     </div>
                   </div>
                   <div className="iq-card-body">
-                    <AddItemForm />
+                    {content}
                   </div>
                 </div>
               </div>

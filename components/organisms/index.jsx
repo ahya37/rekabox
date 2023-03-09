@@ -33,8 +33,10 @@ import SalesContent from "./SalesContent";
 import ModalFormAccount from "./ModalFormAccount";
 import ModalFormLocation from "./ModalFormLocation";
 import AuditContentBasic from "./AuditContentBasic";
+import AddItemFormBasic from "./AddItemFormBasic";
 
 export {
+  AddItemFormBasic,
   AuditContentBasic,
   ModalFormLocation,
   ModalFormAccount,

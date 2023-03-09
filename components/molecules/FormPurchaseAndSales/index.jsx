@@ -54,7 +54,6 @@ export default function FormPurchaseAndSales({ items, type }) {
     }
   };
 
-
   const onCancel = () => {
     router.push("/team/sales");
   };
@@ -62,7 +61,7 @@ export default function FormPurchaseAndSales({ items, type }) {
   let salesItems = [];
   let purchaseItems = [];
   const onSubmit = async () => {
-    if (type === "purchase") {      
+    if (type === "purchase") {
       const ac_idx = selectAccount.value;
       formData.map((m) => {
         purchaseItems.push({
@@ -73,7 +72,7 @@ export default function FormPurchaseAndSales({ items, type }) {
           cost: m.price,
         });
       });
-  
+
       const date_purchase = datePurcahseSales;
       const date_delivery = dateDeliveryStockOut;
 
@@ -85,8 +84,7 @@ export default function FormPurchaseAndSales({ items, type }) {
         branch,
         purchaseItems,
       };
-  
-  
+
       setIsLoading(true);
       const response = await setSavePurchase(form, token);
       setIsLoading(false);
@@ -96,7 +94,7 @@ export default function FormPurchaseAndSales({ items, type }) {
         toast.success(response.data.data.message);
         router.push("/team/purchase");
       }
-    }else{
+    } else {
       const ac_idx = selectAccount.value;
       formData.map((m) => {
         salesItems.push({
@@ -110,7 +108,7 @@ export default function FormPurchaseAndSales({ items, type }) {
 
       const date_sales = datePurcahseSales;
       const estimated_date_stokout = dateDeliveryStockOut;
-  
+
       const form = {
         ac_idx,
         date_sales,
@@ -121,7 +119,7 @@ export default function FormPurchaseAndSales({ items, type }) {
       };
 
       setIsLoading(true);
-      const response = await setSaveSales(form, token)
+      const response = await setSaveSales(form, token);
       setIsLoading(false);
       if (response.error) {
         toast.error(response.message);
@@ -159,8 +157,8 @@ export default function FormPurchaseAndSales({ items, type }) {
   }));
 
   const changeHandlerQty = (id) => (event) => {
-    const { value } = event.target;
-    const qty = value === "" ? 0 : value;
+    let { value } = event.target;
+    let qty = value === "" ? 0 : value;
 
     const newState = formData.map((obj) => {
       if (obj.id === id) {
@@ -177,14 +175,14 @@ export default function FormPurchaseAndSales({ items, type }) {
         return array[i];
       }
     }
-  }
+  };
 
   const selectItem = (obj) => (value) => {
     if (type === "purchase") {
       const exist = checkItemExist(value, formData);
       const { qty } = obj;
       const qtyItem = qty === 0 ? 1 : qty;
-  
+
       if (exist === undefined) {
         const selectedItem = {
           type: obj.type,
@@ -194,26 +192,30 @@ export default function FormPurchaseAndSales({ items, type }) {
           qty: qtyItem,
           price: obj.detail.cost,
           total: qtyItem * obj.detail.cost,
-  
         };
+
         setFormData([...formData, selectedItem]);
-  
       } else {
         const newState = formData.map((obj) => {
           if (obj.id === value) {
             let qtyItem = obj.qty + 1;
-            return { ...obj, qty: parseFloat(qtyItem), total: qtyItem * obj.cost };
+
+            return {
+              ...obj,
+              qty: parseFloat(qtyItem),
+              total: parseFloat(qtyItem) * obj.price,
+            };
           }
           return obj;
         });
+
         setFormData(newState);
       }
-      
-    }else{
+    } else {
       const exist = checkItemExist(value, formData);
       const { qty } = obj;
       const qtyItem = qty === 0 ? 1 : qty;
-  
+
       if (exist === undefined) {
         const selectedItem = {
           type: obj.type,
@@ -223,27 +225,30 @@ export default function FormPurchaseAndSales({ items, type }) {
           qty: qtyItem,
           price: obj.detail.price,
           total: qtyItem * obj.detail.price,
-  
         };
+
         setFormData([...formData, selectedItem]);
-  
       } else {
         const newState = formData.map((obj) => {
           if (obj.id === value) {
             let qtyItem = obj.qty + 1;
-            return { ...obj, qty: parseFloat(qtyItem), total: qtyItem * obj.price };
+            return {
+              ...obj,
+              qty: parseFloat(qtyItem),
+              total: qtyItem * obj.price,
+            };
           }
           return obj;
         });
+
         setFormData(newState);
       }
     }
-
   };
 
   const removeItemAll = () => {
     setFormData([]);
-  }
+  };
 
   const removeItem = (id) => {
     const aftarRemove = formData.filter((x) => {
@@ -280,26 +285,19 @@ export default function FormPurchaseAndSales({ items, type }) {
               </Button>
 
               {formData.length === 0 ? (
-                <Button
-                type="submit"
-                className="btn btn-primary mt-3"
-                disabled
-              >
-                Simpan
-              </Button>
+                <Button type="submit" className="btn btn-primary mt-3" disabled>
+                  Simpan
+                </Button>
               ) : (
-              <Button
-                type="submit"
-                className="btn btn-primary mt-3"
-                onClick={onSubmit}
-              >
-                Simpan
-              </Button>
+                <Button
+                  type="submit"
+                  className="btn btn-primary mt-3"
+                  onClick={onSubmit}
+                >
+                  Simpan
+                </Button>
               )}
-
-
             </>
-
           )}
         </Col>
       </Row>
@@ -347,7 +345,11 @@ export default function FormPurchaseAndSales({ items, type }) {
                 <Col md={12}>
                   <Row>
                     <Col md={2} className="mt-2">
-                      <h6>{type === "purchase" ? "Tanggal Pembelian" : "Tanggal Penjualan"}</h6>
+                      <h6>
+                        {type === "purchase"
+                          ? "Tanggal Pembelian"
+                          : "Tanggal Penjualan"}
+                      </h6>
                     </Col>
                     <Col md={3}>
                       <DateRangePicker
@@ -369,7 +371,11 @@ export default function FormPurchaseAndSales({ items, type }) {
                 <Col md={12}>
                   <Row>
                     <Col md={2} className="mt-2">
-                      <h6>{type === "purchase" ? "Estimasi Tanggal Terkirim" : "Estimasi Tanggal Stok Keluar"}</h6>
+                      <h6>
+                        {type === "purchase"
+                          ? "Estimasi Tanggal Terkirim"
+                          : "Estimasi Tanggal Stok Keluar"}
+                      </h6>
                     </Col>
                     <Col md={3}>
                       <DateRangePicker
@@ -377,7 +383,6 @@ export default function FormPurchaseAndSales({ items, type }) {
                           singleDatePicker: true,
                           showDropdowns: true,
                           dateDeliveryStockOut,
-
                         }}
                         value={dateDeliveryStockOut}
                         onApply={(event) =>
@@ -444,9 +449,7 @@ export default function FormPurchaseAndSales({ items, type }) {
                                 {m.type}
                               </span>
                             ) : (
-                              <span className="badge bg-warning">
-                                {m.type}
-                              </span>
+                              <span className="badge bg-warning">{m.type}</span>
                             )}
                           </td>
                           <td className="text-center">
@@ -469,13 +472,21 @@ export default function FormPurchaseAndSales({ items, type }) {
                       <tr>
                         <td></td>
                         <td>
-                          <strong><span className="text-primary">{countFormData}</span> Item</strong>
+                          <strong>
+                            <span className="text-primary">
+                              {countFormData}
+                            </span>{" "}
+                            Item
+                          </strong>
                         </td>
                         <td></td>
                         <td className="text-right">
                           <strong>
                             Total Quantity{" "}
-                            <span className="text-primary"> {sumTotalQty} </span>
+                            <span className="text-primary">
+                              {" "}
+                              {sumTotalQty}{" "}
+                            </span>
                           </strong>
                         </td>
                         <td></td>
@@ -553,40 +564,39 @@ export default function FormPurchaseAndSales({ items, type }) {
                                 >
                                   <td>
                                     <Row>
-
-                                    <Col md={1}>
-                                    {value.image ? (
-                                      <img
-                                        src={`${IMG}/${value.image}`}
-                                        width="50"
-                                        height="50"
-                                        className="rounded-top rounded-bottom"
-                                      />
-                                    ) : (
-                                      <img
-                                        src="/icon/broken_image.svg"
-                                        width="50"
-                                        height="50"
-                                        className="rounded-top rounded-bottom"
-                                      />
-                                    )}
-                                    </Col>
-                                    <Col m={10} className="ml-3">
-                                    {value.name}
-                                    <br />
-                                    <strong
-                                      style={{ fontSize: 12 }}
-                                      className="text-secondary"
-                                    >
-                                      <Number value={value.detail.cost} /> /
-                                      <Number value={value.detail.price} />
-                                      {value.type === "Bundel" ? "" : " / "}
-                                      {value.category}
-                                    </strong>
-                                    </Col>
+                                      <Col md={1}>
+                                        {value.image ? (
+                                          <img
+                                            src={`${IMG}/${value.image}`}
+                                            width="50"
+                                            height="50"
+                                            className="rounded-top rounded-bottom"
+                                          />
+                                        ) : (
+                                          <img
+                                            src="/icon/broken_image.svg"
+                                            width="50"
+                                            height="50"
+                                            className="rounded-top rounded-bottom"
+                                          />
+                                        )}
+                                      </Col>
+                                      <Col m={10} className="ml-3">
+                                        {value.name}
+                                        <br />
+                                        <strong
+                                          style={{ fontSize: 12 }}
+                                          className="text-secondary"
+                                        >
+                                          <Number value={value.detail.cost} /> /
+                                          <Number value={value.detail.price} />
+                                          {value.type === "Bundel" ? "" : " / "}
+                                          {value.category}
+                                        </strong>
+                                      </Col>
                                     </Row>
                                   </td>
-                                 
+
                                   <td>
                                     {value.type === "Bundel" ? (
                                       <span className="badge bg-secondary">
@@ -598,7 +608,7 @@ export default function FormPurchaseAndSales({ items, type }) {
                                       </span>
                                     )}
                                   </td>
-                                
+
                                   <td>{value.stock}</td>
                                 </tr>
                               );

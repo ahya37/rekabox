@@ -12,15 +12,14 @@ import {
 } from "../../../services/locationitem";
 import styles from "../../../styles/Fileupload.module.css";
 import { generate } from "../../../utils/randomstring";
-import Select from "react-select";
+import Select, { StylesConfig } from "react-select";
 import Cookie from "js-cookie";
 import { Number } from "components";
 
-export default function AddItemForm() {
+export default function AddItemFormBasic() {
   const [category, setCategory] = useState([]);
   const [selectCategory, setSelectCategory] = useState(null);
   const [location, setLocation] = useState([]);
-  const [selectLocation, setSelectLocation] = useState(null);
   const [barcode, setBarcode] = useState("");
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
@@ -55,17 +54,13 @@ export default function AddItemForm() {
 
   const getListLocationAPI = useCallback(async (token, branch) => {
     const response = await getListLocationItem(token, branch);
-    const dataLocation = response.data.data.location;
+    const dataLocation = response.data.data.location[0];
     setLocation(dataLocation);
   }, []);
 
   const optionCategories = category.map((d) => ({
     value: d.cat_idx,
     label: d.cat_name,
-  }));
-  const optionLocations = location.map((d) => ({
-    value: d.loc_idx,
-    label: d.loc_name,
   }));
 
   useEffect(() => {
@@ -78,16 +73,12 @@ export default function AddItemForm() {
   const onSubmit = async () => {
     const data = new FormData();
     const selectedLocation = "";
-    if (brMode === "Basic") {
-      data.append("branch", branch);
-      data.append("token", token);
-      const response = await getLocationItemByBrIdx(data, token);
-      selectedLocation = response.data.data.data;
-    } else {
-      selectedLocation = selectLocation === null ? null : selectLocation.value;
-    }
+    data.append("branch", branch);
+    data.append("token", token);
+    const result = await getLocationItemByBrIdx(data, token);
+    selectedLocation = result?.data.data.data;
     const selectedCategory =
-      selectCategory === null ? null : selectCategory.value;
+      selectCategory === null ? "" : selectCategory.value;
 
     const useForm = {
       selectedCategory,
@@ -102,6 +93,8 @@ export default function AddItemForm() {
       selectedLocation,
       branch,
     };
+
+    console.log(useForm);
 
     data.append("it_name", useForm.name);
     data.append("ic_count", useForm.count);
@@ -122,12 +115,10 @@ export default function AddItemForm() {
       toast.error(response.message);
       setErrors(response.message);
     } else {
-      const userProfile = response.data;
       toast.success("Item telah disimpan");
       router.push("/team/item");
     }
   };
-  console.log(errors);
 
   return (
     <Fragment>
@@ -222,7 +213,7 @@ export default function AddItemForm() {
                 styles={{
                   control: (baseStyles, state) => ({
                     ...baseStyles,
-                    borderColor: selectCategory ? "grey" : "red",
+                    borderColor: errors.it_catidx ? "red" : "grey",
                   }),
                 }}
               />
@@ -239,46 +230,6 @@ export default function AddItemForm() {
           </div>
         </div>
         <div className="col-md-12 mb-3">
-          <div className="row">
-            {brMode === "Basic" ? (
-              ""
-            ) : (
-              <Fragment>
-                <div className="col-md-11 col-sm-10">
-                  <label htmlFor="validationDefault03">
-                    Lokasi <sup className={styles["text-required"]}>*</sup>
-                  </label>
-
-                  <Select
-                    options={optionLocations}
-                    onChange={setSelectLocation.bind(this)}
-                    isClearable={true}
-                    instanceId
-                    styles={{
-                      control: (baseStyles, state) => ({
-                        ...baseStyles,
-                        borderColor: selectLocation ? "grey" : "red",
-                      }),
-                    }}
-                  />
-                </div>
-                <div className="col-1 mt-3 float-right">
-                  <div className="mt-3"></div>
-                  <Button
-                    variant="primary"
-                    onClick={() => router.push("/team/location/add")}
-                  >
-                    <i
-                      className="fa fa-plus text-center"
-                      aria-hidden="true"
-                    ></i>
-                  </Button>
-                </div>
-              </Fragment>
-            )}
-          </div>
-        </div>
-        <div className="col-md-12 mb-3">
           <label>
             Jumlah <sup className={styles["text-required"]}>*</sup>
           </label>
@@ -286,7 +237,6 @@ export default function AddItemForm() {
             type="number"
             className={`form-control ${errors.ic_count && "is-invalid"}`}
             min={1}
-            required
             value={count}
             onChange={(event) => setCount(event.target.value)}
           />
