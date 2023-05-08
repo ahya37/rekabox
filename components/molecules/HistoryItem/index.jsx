@@ -6,7 +6,7 @@ export default function HistoryItem(props) {
 
   function IconType(props) {
     const { status } = props;
-    const typeIcon = "";
+    let typeIcon = "";
     if (status === "Stok Masuk") {
       typeIcon = "Tambah";
       return typeIcon;

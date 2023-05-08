@@ -9,7 +9,7 @@ export default function StockForm(props) {
   const { item } = props;
   const [qword, setQword] = useState("");
 
-  const items = []
+  let items = []
   items = item.map((d) => ({
     id: generate(10),
     lc_idx: d.lc_idx,

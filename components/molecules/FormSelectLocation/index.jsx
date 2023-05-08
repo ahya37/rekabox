@@ -38,7 +38,7 @@ export default function FormSelectLocation() {
 
   const onSelectLocation = async (value) => {
     const token = Cookies.get("token");
-    const locIdx = value;
+    let locIdx = value;
     const useForm = {
       token,
     };
@@ -53,7 +53,7 @@ export default function FormSelectLocation() {
 
   const onSelectAll = async (value) => {
     const token = Cookies.get("token");
-    const locIdx = value;
+    let locIdx = value;
     const useForm = {
       token,
     };

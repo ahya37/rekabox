@@ -40,7 +40,7 @@ export default function StockMissingFormItem(props) {
 
     if (brMode === 'Basic') {
       locIdx = brlocIdx;
-    }else{
+    } else {
       locIdx === undefined ? "" : locIdx;
     }
 
@@ -68,7 +68,7 @@ export default function StockMissingFormItem(props) {
     data.append("in_status", props.instock);
     data.append("in_br_idx", useForm.branch);
     data.append("in_account_idx", useForm.account);
-    data.append("date", useForm.formDateStockMissing); 
+    data.append("date", useForm.formDateStockMissing);
 
 
     setIsLoading(true);
@@ -98,9 +98,21 @@ export default function StockMissingFormItem(props) {
   const onCancel = () => {
     dispatch(setDetailItem({}));
     dispatch(setSelectItemLocation([]));
-    setCount(null);
+    setCount(1);
     setDesc("");
   };
+
+  const handlePlus = () => {
+    setCount(parseInt(count + 1))
+  }
+
+  const handleMinus = () => {
+    if (count <= 1) {
+      setCount(parseInt(1))
+    } else {
+      setCount(parseInt(count - 1))
+    }
+  }
 
   function ButtonSubmit() {
     return (
@@ -167,14 +179,22 @@ export default function StockMissingFormItem(props) {
                     </button>
                   </Col>
                   <Col md={12} className="mt-2">
-                    <div className="form-group">
-                      <input
-                        type="number"
-                        className="form-control form-control-sm"
-                        value={count}
-                        onChange={(event) => setCount(event.target.value)}
-                      />
-                    </div>
+                    <Row>
+                      <Col md={10}>
+                        <div className="form-group">
+                          <input
+                            type="number"
+                            className="form-control form-control-sm"
+                            value={count}
+                            onChange={(event) => setCount(parseInt(event.target.value))}
+                          />
+                        </div>
+                      </Col>
+                      <Col md={2} className="float-right">
+                        <i className="fa fa-minus mr-2" style={{ cursor: "pointer" }} onClick={() => handleMinus()}></i>
+                        <i className="fa fa-plus" style={{ cursor: "pointer" }} onClick={() => handlePlus()}></i>
+                      </Col>
+                    </Row>
                   </Col>
                   <Col md={12}>
                     <div className="form-group">

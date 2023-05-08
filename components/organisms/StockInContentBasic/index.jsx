@@ -47,7 +47,7 @@ export default function StockInContent() {
 
   const getLocationAPI = useCallback(async (token, branch) => {
     const response = await getListLocationItem(token, branch);
-    setBrlocIdx(response?.data.data.location[0].loc_idx)
+    setBrlocIdx(response?.data.data.location.length > 0 ? response?.data.data.location[0].loc_idx : '');
   });
 
 
@@ -58,7 +58,7 @@ export default function StockInContent() {
     getLocationAPI(token, branch);
   }, []);
 
-  const optionsAccount = [{}];
+  let optionsAccount = [{}];
   if (listAccount.length !== 0 ) {
     optionsAccount = listAccount.map((d) => ({
       value: d.ac_idx,
@@ -106,7 +106,7 @@ export default function StockInContent() {
                 onClick={() => router.push("/team/stockin/sm")}
               >
                 <i className="fa fa-plus"></i>
-                Tambah Transaksi Yang Hilang
+                Stok Opname
               </Button>
             </Col>
             <Col md={3} className="p-3 mb-2">

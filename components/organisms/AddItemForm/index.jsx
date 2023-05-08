@@ -77,7 +77,7 @@ export default function AddItemForm() {
 
   const onSubmit = async () => {
     const data = new FormData();
-    const selectedLocation = "";
+    let selectedLocation = "";
     if (brMode === "Basic") {
       data.append("branch", branch);
       data.append("token", token);
@@ -127,7 +127,6 @@ export default function AddItemForm() {
       router.push("/team/item");
     }
   };
-  console.log(errors);
 
   return (
     <Fragment>

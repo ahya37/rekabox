@@ -47,7 +47,7 @@ export default function FormBundle(props) {
   };
 
   const unSelectedItem = (value) => {
-    data = data.filter(function (f) {
+    let data = data.filter(function (f) {
       return f !== value;
     });
     setSelected(data);
@@ -65,7 +65,7 @@ export default function FormBundle(props) {
     });
     setSelected(newState);
   };
-  const data = _.uniq(selected);
+  let data = _.uniq(selected);
   const countItem = data.length;
   let sum = _.sumBy(data, function (m) {
     return parseFloat(m.count);

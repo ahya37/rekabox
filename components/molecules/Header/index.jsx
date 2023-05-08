@@ -5,8 +5,8 @@ export default function Header() {
       <div className="container">
         <div id="logo" className="pull-left">
           <h1>
-            <Link href="/">
-              <a className="scrollto">RekaBox</a>
+            <Link href="/" className="scrollto">
+              RekaBox
             </Link>
           </h1>
           <a href="/">

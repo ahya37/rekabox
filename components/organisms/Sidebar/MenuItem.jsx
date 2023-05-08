@@ -7,7 +7,7 @@ export default function MenuItem(props) {
     active,
   });
 
-  const classType = "";
+  let classType = "";
   if (type === "menu") {
     classType = "iq-waves-effect";
   } else {

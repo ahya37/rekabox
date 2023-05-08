@@ -7,11 +7,11 @@ export default function Banner() {
       <section id="intro">
         <div className="intro-text">
           <h2>Manage your inventory</h2>
-          <Link href="/sign-up">
-            <a className="btn-get-started scrollto">Mulai</a>
+          <Link href="/sign-up" className="btn-get-started scrollto">
+            Mulai
           </Link>
-          <Link href="/sign-in">
-            <a className="btn-get-started scrollto">Login</a>
+          <Link href="/sign-in"  className="btn-get-started scrollto">
+            Login
           </Link>
         </div>
 

@@ -1,10 +1,10 @@
 import { Col, Row } from "react-bootstrap";
 
 export default function FooterStockForm(props) {
-  const { countDesc, data, icCount, title } = props;
+  let { countDesc, data, icCount, title } = props;
 
   function ViewCountAudit() {
-    const count = 0;
+    let count = 0;
     if (data === "") {
       return <span>{count}</span>;
     }

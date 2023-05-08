@@ -69,7 +69,7 @@ export default function StockOutContentBasic(props) {
   }, []);
 
 
-  const optionsAccount = [{}];
+  let optionsAccount = [{}];
   if (listAccount.length !== 0 ) {
     optionsAccount = listAccount.map((d) => ({
       value: d.ac_idx,
@@ -116,7 +116,7 @@ export default function StockOutContentBasic(props) {
                 onClick={() => router.push("/team/stockout/sm")}
               >
                 <i className="fa fa-plus"></i>
-                Tambah Transaksi Yang Hilang
+                Stok Opname
               </Button>
             </Col>
             <Col md={3} className="p-3 mb-2">

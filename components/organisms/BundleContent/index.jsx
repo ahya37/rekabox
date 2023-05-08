@@ -15,7 +15,7 @@ export default function BundleContent() {
   const router = useRouter();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [selected, setSelected] = useState([]);
+  let  [selected, setSelected] = useState([]);
 
   const getListBundleAPI = useCallback(async (token, branch) => {
     setIsLoading(true);

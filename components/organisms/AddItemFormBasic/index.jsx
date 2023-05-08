@@ -72,7 +72,7 @@ export default function AddItemFormBasic() {
 
   const onSubmit = async () => {
     const data = new FormData();
-    const selectedLocation = "";
+    let selectedLocation = "";
     data.append("branch", branch);
     data.append("token", token);
     const result = await getLocationItemByBrIdx(data, token);
@@ -94,7 +94,6 @@ export default function AddItemFormBasic() {
       branch,
     };
 
-    console.log(useForm);
 
     data.append("it_name", useForm.name);
     data.append("ic_count", useForm.count);

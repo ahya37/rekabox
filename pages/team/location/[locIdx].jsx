@@ -34,7 +34,7 @@ export default function EditLocation(props) {
 
 export async function getServerSideProps({ req, params }) {
   const { token } = req.cookies;
-  const locIdx = params.locIdx;
+  let locIdx = params.locIdx;
 
   const auth = await getChekAuth(token);
 

@@ -70,7 +70,7 @@ export default function StockInContent(props) {
     getCallAPI(token, branch);
   }, [setItems, showItems]);
 
-  const optionsAccount = [{}];
+  let optionsAccount = [{}];
   if (listAccount.length !== 0) {
     optionsAccount = listAccount.map((d) => ({
       value: d.ac_idx,
@@ -104,7 +104,7 @@ export default function StockInContent(props) {
     setSelectAccount(e)
   }
 
-  const optionsLocation = [{}];
+  let optionsLocation = [{}];
   if (listLocation.length !== 0) {
     optionsLocation = listLocation.map((d) => ({
       value: d.loc_idx,

@@ -44,7 +44,7 @@ export default function FormOptionItemLocation(props) {
     } else {
       const token   = Cookies.get("token");
       const branch  =   Cookies.get("branch");
-      const locIdx  = e.value;
+      let locIdx  = e.value;
       const useForm = {
         token,
       };

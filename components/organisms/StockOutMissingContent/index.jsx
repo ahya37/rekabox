@@ -79,7 +79,7 @@ export default function StockOutMissingtContent() {
     getListAccountAPI(token, branch)
   }, []);
 
-  const optionsAccount = [{}];
+  let optionsAccount = [{}];
   if (listAccount.length !== 0 ) {
     optionsAccount = listAccount.map((d) => ({
       value: d.ac_idx,
@@ -118,7 +118,7 @@ export default function StockOutMissingtContent() {
       <div className="iq-card">
         <div className="card-body">
           <Row className="border-bottom">
-            <Col md={8}><h4 className="text-danger">Tambah Stok Keluar Yang Hilang</h4></Col>
+            <Col md={8}><h4 className="text-danger">Tambah Stok Opname</h4></Col>
             <Col md={4}>
               <DateRangePicker
                 initialSettings={{

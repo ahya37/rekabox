@@ -15,23 +15,23 @@ import { getListSales, setSaveAllStockOutSales } from "services/sales";
 import Swal from "sweetalert2";
 
 export default function SalesContent() {
-  const [selectDateRange, setSelectDateRange] = useState("");
-  const [selected, setSelected] = useState([]);
-  const [itemStockMinus, setItemStockMinus] = useState([]);
-  const [notifStockMinus, setNotifStockMinus] = useState("");
-  const [status, setStatus] = useState("");
-  const [note, setNote] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [daterange, setDaterange] = useState({
+  let [selectDateRange, setSelectDateRange] = useState("");
+  let [selected, setSelected] = useState([]);
+  let [itemStockMinus, setItemStockMinus] = useState([]);
+  let [notifStockMinus, setNotifStockMinus] = useState("");
+  let [status, setStatus] = useState("");
+  let [note, setNote] = useState("");
+  let [isLoading, setIsLoading] = useState(false);
+  let [daterange, setDaterange] = useState({
     startDate: moment().format("MM/DD/YYYY"),
     endDate: moment().format("MM/DD/YYYY"),
     locale: {
       cancelLabel: "Semua",
     },
   });
-  const [sales, setSales] = useState([]);
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
+  let [sales, setSales] = useState([]);
+  let [show, setShow] = useState(false);
+  let handleClose = () => setShow(false);
 
   const columns = [
     {
@@ -98,7 +98,7 @@ export default function SalesContent() {
     []
     );
     
-  const disabledDataSelectRow = [];
+  let disabledDataSelectRow = [];
   for(let i = 0; i < sales.length; i++){
     if (sales[i].sal_status === 'Released') {
       disabledDataSelectRow = disabledDataSelectRow.concat(sales[i].id);

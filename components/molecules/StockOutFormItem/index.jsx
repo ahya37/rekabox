@@ -15,7 +15,7 @@ import moment from "moment";
 
 
 export default function StockOutFormItem(props) {
-  const { title, countDesc, brlocIdx, brMode, account, location, date } = props;
+  let { title, countDesc, brlocIdx, brMode, account, location, date } = props;
   const { showItems, detailItem } = useSelector((state) => state.itemReducer);
   const { value } = showItems;
   const {
@@ -71,7 +71,7 @@ export default function StockOutFormItem(props) {
     data.append("in_account_idx", useForm.account);
     data.append("in_present_date", useForm.date);
 
-    const response = "";
+    let response = "";
     if (props.instock === "audit") {
       setIsLoading(true);
       response = await setSaveStockAuditItem(data, token);

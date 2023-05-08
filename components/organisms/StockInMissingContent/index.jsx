@@ -49,7 +49,7 @@ export default function StockInMissingContent() {
       <div className="iq-card">
         <div className="card-body">
           <Row className="border-bottom">
-            <Col md={8}><h4 className="text-primary"> Tambah Stok Masuk Yang Hilang</h4></Col>
+            <Col md={8}><h4 className="text-primary"> Tambah Stok Opname</h4></Col>
             <Col md={4}>
               <DateRangePicker
                 initialSettings={{

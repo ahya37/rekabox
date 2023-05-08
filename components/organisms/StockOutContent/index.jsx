@@ -53,7 +53,7 @@ export default function StockOutContent() {
   });
 
   useEffect(() => {
-    const locIdx = 'all';
+    let locIdx = 'all';
     const data = new FormData();
     data.append('token', token);
 
@@ -64,7 +64,7 @@ export default function StockOutContent() {
 
   }, []);
 
-  const optionsAccount = [{}];
+  let optionsAccount = [{}];
   if (listAccount.length !== 0) {
     optionsAccount = listAccount.map((d) => ({
       value: d.ac_idx,
@@ -100,7 +100,7 @@ export default function StockOutContent() {
     setSelectAccount(e);
   }
 
-  const optionsLocation = [{}];
+  let optionsLocation = [{}];
   if (locations.length !== 0) {
     optionsLocation = locations.map((d) => ({
       value: d.loc_idx,
@@ -111,7 +111,7 @@ export default function StockOutContent() {
 
   const handleChangeLocation = async (e) => {
     setSelectLocation(e)
-    const locIdx = "all";
+    let locIdx = "all";
     if (e !== null) {
       locIdx = e.value;
     }

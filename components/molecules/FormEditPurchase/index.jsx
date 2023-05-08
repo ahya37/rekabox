@@ -116,7 +116,7 @@ export default function FormEditPurchase({ idx, purchase, bundle }) {
   useEffect(() => {
     getListAccountAPI(token, branch);
   }, []);
-  const optionsAccount = account.map((d) => ({
+  let optionsAccount = account.map((d) => ({
     value: d.ac_idx,
     label: d.ac_name,
   }));

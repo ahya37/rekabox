@@ -15,12 +15,12 @@ import { Number } from "components";
 import Swal from "sweetalert2";
 
 export default function PurchaseContent() {
-  const [selectDateRange, setSelectDateRange] = useState("");
-  const [selected, setSelected] = useState([]);
-  const [status, setStatus] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState([]);
-  const [daterange, setDaterange] = useState({
+  let [selectDateRange, setSelectDateRange] = useState("");
+  let [selected, setSelected] = useState([]);
+  let [status, setStatus] = useState("");
+  let [isLoading, setIsLoading] = useState(false);
+  let [data, setData] = useState([]);
+  let [daterange, setDaterange] = useState({
     startDate: moment().format("MM/DD/YYYY"),
     endDate: moment().format("MM/DD/YYYY"),
     locale: {
