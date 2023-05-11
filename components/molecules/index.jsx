@@ -29,8 +29,10 @@ import FormEditSales from "./FormEditSales";
 import FormSelectAccount from "./FormSelectAccount";
 import StockOutContentBasic from "./StockOutContentBasic";
 import StockOutFormItem from "./StockOutFormItem";
+import FormOrderHistoryStockOut from "./FormOrderHistoryStockOut";
 
 export {
+  FormOrderHistoryStockOut,
   StockOutFormItem,
   StockOutContentBasic,
   FormSelectAccount,

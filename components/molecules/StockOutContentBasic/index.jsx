@@ -113,7 +113,7 @@ export default function StockOutContentBasic(props) {
               <Button
                 variant="default border"
                 className="float-right"
-                onClick={() => router.push("/team/stockout/sm")}
+                onClick={() => router.push("/team/historystockout")}
               >
                 <i className="fa fa-plus"></i>
                 Stok Opname

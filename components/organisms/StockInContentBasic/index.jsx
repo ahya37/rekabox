@@ -103,7 +103,7 @@ export default function StockInContent() {
               <Button
                 variant="default border"
                 className="float-right"
-                onClick={() => router.push("/team/stockin/sm")}
+                onClick={() => router.push("/team/stockout")}
               >
                 <i className="fa fa-plus"></i>
                 Stok Opname

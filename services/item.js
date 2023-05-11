@@ -185,3 +185,14 @@ export async function getListItemCreateBundle(token,branch) {
     accessToken: token,
   });
 }
+
+export async function setReturItem(data, token) {
+  const url = `${ROOT_API}/api/item/retur/store`;
+
+  return callAPI({
+    url,
+    method: "POST",
+    data,
+    accessToken: token,
+  });
+}
