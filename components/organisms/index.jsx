@@ -35,8 +35,10 @@ import ModalFormLocation from "./ModalFormLocation";
 import AuditContentBasic from "./AuditContentBasic";
 import AddItemFormBasic from "./AddItemFormBasic";
 import HistoryStockOutContent from "./HistoryStockOutContent";
+import HistoryStockInContent from "./HistoryStockInContent";
 
 export {
+  HistoryStockInContent,
   HistoryStockOutContent,
   AddItemFormBasic,
   AuditContentBasic,

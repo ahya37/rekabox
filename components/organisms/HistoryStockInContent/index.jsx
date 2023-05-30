@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { setDetailHistory } from "../../../redux/action/history";
 import { getDetailHistory } from "../../../services/history";
 import { FormOrderHistoryStockOut, HistoryItem } from "../../molecules";
-import { setReturItemStockOut } from "services/item";
+import { setReturItemStockIn } from "services/item";
 
 export default function HistoryStockOutContent() {
   const [brMode, setBrMode] = useState("");
@@ -65,7 +65,7 @@ export default function HistoryStockOutContent() {
     data.append("in_idx", id);
     data.append("in_desc", desc);
     setIsLoadingButton(true);
-    const response = await setReturItemStockOut(data, token)
+    const response = await setReturItemStockIn(data, token);
     setIsLoadingButton(false);
 
 
@@ -77,6 +77,7 @@ export default function HistoryStockOutContent() {
     }
   }
 
+  console.log('detailHistory: ', detailHistory);
 
   return (
     <div className="container-fluid">

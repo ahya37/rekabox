@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Navbar, Sidebar, HistoryStockOutContent } from "../../../components";
+import { Navbar, Sidebar, HistoryStockInContent } from "../../../components";
 import { getChekAuth } from "../../../services/auth";
 import { getListHistories } from "../../../services/history";
 import { ClearRedux } from "../../../services/redux";
@@ -8,13 +8,13 @@ import { getReportInventory } from "../../../services/report";
 import { setListHistories } from "redux/action/history";
 import { setDataReport } from "redux/action/history";
 
-export default function HistoryStockout(props) {
+export default function HistoryStockIn(props) {
   const { dataHistories, dataReport } = props;
 
 
   let newDataHistories = [];
   dataHistories.map((m) => {
-    if (m.in_status === 'Stok Keluar')
+    if (m.in_status === 'Stok Masuk')
     newDataHistories.push({
           in_count: m.in_count,
           in_create:m.in_create,
@@ -40,10 +40,10 @@ export default function HistoryStockout(props) {
 
   return (
     <div className="wrapper">
-      <Sidebar activeMenu="stockout" />
+      <Sidebar activeMenu="stockin" />
       <div id="content-page" className="content-page">
         <Navbar />
-        <HistoryStockOutContent />
+        <HistoryStockInContent />
       </div>
     </div>
   );

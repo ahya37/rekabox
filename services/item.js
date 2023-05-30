@@ -186,8 +186,19 @@ export async function getListItemCreateBundle(token,branch) {
   });
 }
 
-export async function setReturItem(data, token) {
-  const url = `${ROOT_API}/api/item/retur/store`;
+export async function setReturItemStockOut(data, token) {
+  const url = `${ROOT_API}/api/item/retur/stockout/store`;
+
+  return callAPI({
+    url,
+    method: "POST",
+    data,
+    accessToken: token,
+  });
+}
+
+export async function setReturItemStockIn(data, token) {
+  const url = `${ROOT_API}/api/item/retur/stockin/store`;
 
   return callAPI({
     url,
