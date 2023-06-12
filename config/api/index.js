@@ -15,9 +15,10 @@ export default async function callAPI({ url, method, data, accessToken }) {
   }).catch((err) => err.response);
 
   if (response.status > 300) {
+
     const res = {
       error: true,
-      message: response.data.data.message,
+      message: response?.data.data.message,
       data: null,
     };
     return res;
@@ -27,7 +28,7 @@ export default async function callAPI({ url, method, data, accessToken }) {
   const res = {
     error: false,
     message: null,
-    data: length > 1 ? response.data : response.data.data,
+    data: length > 1 ? response?.data : response.data.data,
   };
   return res;
 }

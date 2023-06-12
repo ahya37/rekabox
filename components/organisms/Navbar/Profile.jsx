@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { setLogout } from "../../../services/auth";
 import { ClearRedux } from "../../../services/redux";
 import { getMyprofile } from "../../../services/users";
+import { setMenu } from "redux/action/menu";
 
 export default function Profile(props) {
   const [isLoading, setIsLoading] = useState(false);
@@ -47,7 +48,7 @@ export default function Profile(props) {
       toast.success("Berhasil Logout");
       router.push("/");
     }
-    dispatch({ type: "SET_MENU", value: [] });
+    dispatch(setMenu([]));
     dispatch(ClearRedux());
     localStorage.removeItem("userProfile");
     localStorage.removeItem("branch");

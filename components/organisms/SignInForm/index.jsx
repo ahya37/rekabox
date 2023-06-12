@@ -30,13 +30,14 @@ export default function SignInForm() {
     } else {
       setIsLoading(true);
       const response = await setLogin(form);
+      
       setIsLoading(false);
       if (response.error) {
         toast.error(response.message);
       } else {
         toast.success("Login Berhasil");
-        router.push("/team/item");
         const userProfile = response.data;
+
         localStorage.setItem("userProfile", JSON.stringify(userProfile));
         localStorage.setItem("branch", JSON.stringify(userProfile.data.branch));
 
@@ -44,10 +45,13 @@ export default function SignInForm() {
         const branch = userProfile.data.branch.br_idx;
         Cookies.set("token", token);
         Cookies.set("branch", branch);
-        const responseMenu = await getMenu(token, branch);
+        const responseMenu = await getMenu(token,branch);
         dispatch(setMenu(responseMenu.data.data.menu));
         const result = await getMyprofile(token);
         dispatch({ type: "SET_PROFILE", value: result.data.data.user });
+
+        router.push("/team/item");
+
       }
     }
   };

@@ -13,8 +13,8 @@ export async function getListUsers(token) {
   });
 }
 
-export async function getMenu(token, branch) {
-  let params = `?token=${token}&branch=${branch}`;
+export async function getMenu(token,branch) {
+  let params = `?branch=${branch}`;
   const url = `${ROOT_API}/api/getmenu${params}`;
 
   return callAPI({
@@ -24,8 +24,7 @@ export async function getMenu(token, branch) {
   });
 }
 export async function getSetting(token) {
-  let params = `?token=${token}`;
-  const url = `${ROOT_API}/api/user/setting${params}`;
+  const url = `${ROOT_API}/api/user/setting`;
 
   return callAPI({
     url: url,
@@ -57,8 +56,7 @@ export async function setUpdateProfileUser(data, token) {
 }
 
 export async function getMyprofile(token) {
-  let params = `?token=${token}`;
-  const url = `${ROOT_API}/api/user/profile${params}`;
+  const url = `${ROOT_API}/api/user/profile`;
 
   return callAPI({
     url: url,

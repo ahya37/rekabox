@@ -4,7 +4,7 @@ const ROOT_API = process.env.NEXT_PUBLIC_API;
 
 
 export async function getAllBranch(token) {
-    const url = `${ROOT_API}/api/branch/${token}`;
+    const url = `${ROOT_API}/api/branch`;
   
     return callAPI({
       url: url,
